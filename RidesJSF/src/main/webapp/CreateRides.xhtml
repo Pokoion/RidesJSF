@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides 24 / CreateRides</title>
+	</h:head>
+	<style>
+.error-message {
+	color: red;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.info-message {
+	color: blue;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
+</style>
+	<h:body>
+		<!-- Título centrado -->
+		<h1 style="text-align: center;">Create Rides</h1>
+
+		<!-- Botón de Home -->
+		<h:form>
+			<p:commandButton value="Go Home" action="Home"
+				style="align-self: flex-start; margin-left: 40px;" />
+		</h:form>
+
+		<!-- Formulario principal -->
+		<h:form
+			style="display: flex; flex-direction: column; align-items: center; margin-top: 40px">
+
+			<!-- Contenedor de 3 columnas -->
+			<div
+				style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+
+				<!-- Primera columna (Depart & Arrival) -->
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<p:outputLabel for="departCity" value="Depart City: " />
+					<p:inputText id="departCity" value="#{createRides.departCity}" />
+
+					<p:outputLabel for="arrivalCity" value="Arrival City: " />
+					<p:inputText id="arrivalCity" value="#{createRides.arrivalCity}" />
+				</div>
+
+				<!-- Segunda columna (Price & Seats) -->
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<p:outputLabel for="price" value="Price: " />
+					<p:inputText id="price" value="#{createRides.price}"
+						converter="javax.faces.Float" />
+
+					<p:outputLabel for="seats" value="Seats: " />
+					<p:inputText id="seats" value="#{createRides.seats}"
+						converter="javax.faces.Integer" />
+				</div>
+
+				<!-- Tercera columna (Fecha) -->
+				<div style="display: flex; flex-direction: column; gap: 10px;">
+					<p:outputLabel for="calendar" value="Date: " />
+					<p:calendar value="#{createRides.data}" id="calendar" inline="true"
+						pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
+				</div>
+			</div>
+
+			<!-- Botón para crear el Ride -->
+			<p:commandButton id="createRideButton" value="Create Ride"
+				action="#{createRides.createRide}" update="messages"
+				style="margin-bottom: 20px;" />
+
+			<!-- Mensajes de error -->
+			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
+
+		</h:form>
+	</h:body>
+</f:view>
+</html>

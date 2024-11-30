@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides 24 / Query Rides</title>
+		<h:outputStylesheet name="styles.css" />
+	</h:head>
+	<h:body>
+		<h:form>
+			<!-- Title centered -->
+			<h1 style="text-align: center;">Query Rides</h1>
+
+			<!-- Go Home Button -->
+			<p:commandButton value="Go Home" action="Home" style="margin-bottom: 1em; margin-left:40px" />
+			<br />
+			
+			<!-- Depart City Dropdown -->
+			<div style="display: flex; flex-direction: column; align-items: center; margin: 1em;">
+				<div style="margin-right: 20px;">
+					<p:selectOneMenu id="departCity" value="#{queryRides.selectedDepartCity}">
+						<f:selectItem itemLabel="Choose a Depart City" itemValue="" />
+						<f:selectItems itemLabel="#{city}" value="#{queryRides.departCities}"  />
+						<p:ajax update="arrivalCity"/>
+					</p:selectOneMenu>
+				</div>
+
+				<!-- Arrival City Dropdown -->
+				<div style="margin-right: 20px; margin: 1em;">
+					<p:selectOneMenu id="arrivalCity" value="#{queryRides.selectedArrivalCity}">
+						<f:selectItem itemLabel="Choose a Destination City" itemValue="" />
+						<f:selectItems itemLabel="#{city}" value="#{queryRides.arrivalCities}" />
+						<p:ajax update="arrivalCity"/>
+					</p:selectOneMenu>
+				</div>
+
+				<!-- Calendar -->
+				<div>
+					 <p:calendar value="#{queryRides.data}" id="calendar" inline="true" pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
+				</div>
+			</div>
+
+			<br />
+
+			<!-- Search Button -->
+			<div style="text-align: center;">
+				<p:commandButton id="button" value="Search" action="#{queryRides.updateRides}"
+				update="monthRides, errors" style="margin-bottom: 1em;"/>
+			</div>
+			
+			<!-- Error Messages -->
+			<p:messages id="errors" style="color:red; text-align: center; list-style-type: none; padding-left: 0;"/>
+			
+			<br />
+			<br />
+
+			<!-- Title of table centered -->
+			<h2 style="text-align: center;">Rides in Selected Month:</h2>
+
+			<!-- Month Rides -->
+			<div class="monthRides">
+				<p:dataTable id="monthRides" value="#{queryRides.rides}" var="ride" responsiveLayout="scroll" style="width: 100%;">
+					<!-- Static Columns -->
+					<p:column headerText="Ride Number">
+						<h:outputText value="#{ride.rideNumber}" />
+					</p:column>
+					<p:column headerText="Depart City">
+						<h:outputText value="#{ride.from}" />
+					</p:column>
+					<p:column headerText="Arrival City">
+						<h:outputText value="#{ride.to}" />
+					</p:column>
+					<p:column headerText="Number of Places">
+						<h:outputText value="#{ride.nPlaces}" />
+					</p:column>
+					<p:column headerText="Date">
+						<h:outputText value="#{ride.date}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Price">
+						<h:outputText value="#{ride.price}" />
+					</p:column>
+					<p:column headerText="Driver Name">
+						<h:outputText value="#{ride.driver.name}" />
+					</p:column>
+					<p:column headerText="Driver Email">
+						<h:outputText value="#{ride.driver.email}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides24 / Login</title>
+		<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.form-container {
+    width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-container h:outputLabel {
+    font-size: 14px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+    margin-bottom: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+.form-container .login-btn {
+    background-color: #7CE7F3;
+}
+
+.form-container .register-btn {
+    background-color: #D7D7D7;
+}
+
+		</style>
+	</h:head>
+	<h:body>
+        <h:form class="form-container">
+        	<h1>Login</h1>
+        	
+            <p:outputLabel for="email" value="Email" />
+            <p:inputText id="email" value="#{Login.email}" />
+            
+            <p:outputLabel for="pass" value="Password" />
+            <h:inputSecret id="pass" value="#{Login.pass}" />
+            
+            <p:commandButton value="Login" action="#{Login.login}" styleClass="login-btn" />
+            <p:messages id="messages" showDetail="true"/>
+            <p:commandButton value="Not registered yet?" action="Register" styleClass="register-btn" />
+        </h:form>
+	</h:body>
+</f:view>
+</html>
