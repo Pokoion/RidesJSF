@@ -1,7 +1,9 @@
 package eredua.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "Register")
 @SessionScoped
@@ -38,8 +40,30 @@ public class Register {
 		this.pass2 = pass2;
 	}
 	
+	public boolean validateInput() {
+		String mailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+		if(this.email.isEmpty() || !this.email.matches(mailRegex)) {
+			FacesContext.getCurrentInstance().addMessage(null, 
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Please write a valid email."));
+			return false;
+		}
+		if(this.pass.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, 
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Please write a valid password."));
+			return false;
+		}
+		if(!this.pass.equals(this.pass2)) {
+			FacesContext.getCurrentInstance().addMessage(null, 
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Please repeat the password correctly."));
+			return false;
+		}
+		return true;
+	}
+	
     public void register() {
-
+    	if(!validateInput()) return;
+		FacesContext.getCurrentInstance().addMessage(null, 
+			    new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "You have been registered correctly!"));
     }
 
 }

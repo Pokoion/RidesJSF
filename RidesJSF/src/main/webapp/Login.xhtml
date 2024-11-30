@@ -67,6 +67,12 @@ h1 {
 .form-container .register-btn {
     background-color: #D7D7D7;
 }
+.error-message {
+	color: red;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
 
 		</style>
 	</h:head>
@@ -80,9 +86,9 @@ h1 {
             <p:outputLabel for="pass" value="Password" />
             <h:inputSecret id="pass" value="#{Login.pass}" />
             
-            <p:commandButton value="Login" action="#{Login.login}" styleClass="login-btn" />
-            <p:messages id="messages" showDetail="true"/>
+            <p:commandButton value="Login" action="#{Login.login}" styleClass="login-btn" update="messages"/>
             <p:commandButton value="Not registered yet?" action="Register" styleClass="register-btn" />
+            <h:messages id="messages" showDetail="true" errorClass="error-message"/>
         </h:form>
 	</h:body>
 </f:view>

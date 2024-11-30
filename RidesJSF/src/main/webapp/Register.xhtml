@@ -67,7 +67,19 @@ h1 {
 .form-container .login-btn {
     background-color: #D7D7D7;
     width: 100%;
-    margin-top: 20px;
+}
+.error-message {
+	color: red;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.info-message {
+	color: blue;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
 }
 	</style>
 	<h:body>
@@ -83,9 +95,9 @@ h1 {
             <p:outputLabel for="pass2" value="Repeat Password" />
             <h:inputSecret id="pass2" value="#{Register.pass2}" />
             
-            <p:commandButton value="Register" action="#{Register.register}" styleClass="register-btn" />
-            <h:messages id="messages" showDetail="true"/>
+            <p:commandButton value="Register" action="#{Register.register}" styleClass="register-btn" update="messages" />
             <p:commandButton value="Back to Login" action="Login" styleClass="login-btn" />
+            <h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
 		</h:form>
 	</h:body>
 </f:view>
