@@ -25,24 +25,22 @@
 }
 </style>
 	<h:body>
-		<!-- Título centrado -->
+		<!-- Title -->
 		<h1 style="text-align: center;">Create Rides</h1>
 
-		<!-- Botón de Home -->
+		<!-- Home Button -->
 		<h:form>
 			<p:commandButton value="Go Home" action="Home"
 				style="align-self: flex-start; margin-left: 40px;" />
 		</h:form>
 
-		<!-- Formulario principal -->
+		<!-- Form -->
 		<h:form
 			style="display: flex; flex-direction: column; align-items: center; margin-top: 40px">
 
-			<!-- Contenedor de 3 columnas -->
 			<div
 				style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
 
-				<!-- Primera columna (Depart & Arrival) -->
 				<div style="display: flex; flex-direction: column; gap: 10px;">
 					<p:outputLabel for="departCity" value="Depart City: " />
 					<p:inputText id="departCity" value="#{createRides.departCity}" />
@@ -51,7 +49,6 @@
 					<p:inputText id="arrivalCity" value="#{createRides.arrivalCity}" />
 				</div>
 
-				<!-- Segunda columna (Price & Seats) -->
 				<div style="display: flex; flex-direction: column; gap: 10px;">
 					<p:outputLabel for="price" value="Price: " />
 					<p:inputText id="price" value="#{createRides.price}"
@@ -62,7 +59,6 @@
 						converter="javax.faces.Integer" />
 				</div>
 
-				<!-- Tercera columna (Fecha) -->
 				<div style="display: flex; flex-direction: column; gap: 10px;">
 					<p:outputLabel for="calendar" value="Date: " />
 					<p:calendar value="#{createRides.data}" id="calendar" inline="true"
@@ -70,12 +66,12 @@
 				</div>
 			</div>
 
-			<!-- Botón para crear el Ride -->
+			<!-- Create Ride Button -->
 			<p:commandButton id="createRideButton" value="Create Ride"
 				action="#{createRides.createRide}" update="messages"
 				style="margin-bottom: 20px;" />
 
-			<!-- Mensajes de error -->
+			<!-- Messages -->
 			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
 
 		</h:form>

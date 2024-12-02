@@ -5,10 +5,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import eredua.domeinua.User;
+import nagusia.DataAccess;
+
 @ManagedBean(name = "Login")
 @SessionScoped
 public class Login {
 
+	private DataAccess dataAccess = new DataAccess();
 	private String email = "";
 	private String pass = "";
 	
@@ -46,6 +50,12 @@ public class Login {
 	
     public String login() {
     	if(!validateInput()) return "";
+    	User u = dataAccess.login(email, pass);
+    	if(u == null) {
+			FacesContext.getCurrentInstance().addMessage(null, 
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "User not found."));
+			return "";
+    	}
         return "Ok"; 
     }
 }

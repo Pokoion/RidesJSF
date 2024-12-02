@@ -12,8 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.event.SelectEvent;
-
 @ManagedBean(name = "queryRides")
 @SessionScoped
 public class QueryRidesBean {
@@ -88,7 +86,7 @@ public class QueryRidesBean {
 		System.out.println(selectedDepartCity);
 		System.out.println(selectedArrivalCity);
 		System.out.println(data);
-		// Validación de campos
+
 		if (selectedDepartCity == null || selectedDepartCity.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error: Please select a Depart City."));
 			this.rides.clear();
