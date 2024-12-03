@@ -2,9 +2,9 @@ package eredua.bean;
 
 import javax.faces.bean.SessionScoped;
 
-import businessLogic.BLFacade;
-import businessLogic.BLFacadeImplementation;
-import dataAccess.DataAccess;
+import businessLogicRides24.BLFacade;
+import businessLogicRides24.BLFacadeImplementation;
+import nagusia.DataAccess;
 
 @SessionScoped
 public class FacadeBean {

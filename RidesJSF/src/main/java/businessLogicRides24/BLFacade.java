@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 //import domain.Booking;
-import domain.Ride;
+import eredua.domeinua.Ride;
 import eredua.domeinua.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;

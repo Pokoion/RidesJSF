@@ -68,17 +68,17 @@
 						<h:outputText value="#{ride.rideNumber}" />
 					</p:column>
 					<p:column headerText="Depart City">
-						<h:outputText value="#{ride.from}" />
+						<h:outputText value="#{ride.depart}" />
 					</p:column>
 					<p:column headerText="Arrival City">
-						<h:outputText value="#{ride.to}" />
+						<h:outputText value="#{ride.arrival}" />
 					</p:column>
 					<p:column headerText="Number of Places">
 						<h:outputText value="#{ride.nPlaces}" />
 					</p:column>
 					<p:column headerText="Date">
 						<h:outputText value="#{ride.date}" >
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Price">

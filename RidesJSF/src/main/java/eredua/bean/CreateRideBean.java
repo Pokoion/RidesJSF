@@ -7,8 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import businessLogic.BLFacade;
-import domain.Ride;
+import businessLogicRides24.BLFacade;
+import eredua.domeinua.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 
@@ -102,7 +102,7 @@ public class CreateRideBean {
 		if (!validateInput()) return;
 		Ride ride = null;
 		try {
-			ride = facade.createRide(departCity, arrivalCity, data, seats, price, "driver1@gmail.com");
+			ride = facade.createRide(departCity, arrivalCity, data, seats, price, "jonoolea@gmail.com");
 		} catch (RideMustBeLaterThanTodayException e) {
 			FacesContext.getCurrentInstance().addMessage(null, 
 				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Ride must be later than today."));

@@ -3,24 +3,25 @@ package eredua.domeinua;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
-import eredua.domeinua.Driver;
-import domain.Ride;
 
 @Entity
 public class Driver extends User {
 
-	//private List<Ride> rides=new ArrayList<>();
+	@OneToMany(targetEntity=Ride.class, mappedBy="driver", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE,CascadeType.PERSIST})
+	private List<Ride> rides;
 	
     public Driver() {
-        super();
     }
     
     public Driver(String email, String name, String pass) {
         super(email, name, pass);
+        this.rides = new ArrayList<>();
     }
 
 	/**
@@ -31,12 +32,11 @@ public class Driver extends User {
 	 * @return Bet
 	 */
     
-    /*
 	public Ride addRide(String from, String to, Date date, int nPlaces, float price)  {
         Ride ride=new Ride(from,to,date,nPlaces,price, this);
         rides.add(ride);
         return ride;
-	}*/
+	}
 
 	/**
 	 * This method checks if the ride already exists for that driver
@@ -46,22 +46,21 @@ public class Driver extends User {
 	 * @param date the date of the ride 
 	 * @return true if the ride exists and false in other case
 	 */
-    /*
 	public boolean doesRideExists(String from, String to, Date date)  {	
 		for (Ride r:rides)
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
+			if ( (java.util.Objects.equals(r.getDepart(),from)) && (java.util.Objects.equals(r.getArrival(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
 			 return true;
 		
 		return false;
-	}*/
-/*
+	}
+
 	public Ride removeRide(String from, String to, Date date) {
 		boolean found=false;
 		int index=0;
 		Ride r=null;
 		while (!found && index<=rides.size()) {
 			r=rides.get(++index);
-			if ( (java.util.Objects.equals(r.getFrom(),from)) && (java.util.Objects.equals(r.getTo(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
+			if ( (java.util.Objects.equals(r.getDepart(),from)) && (java.util.Objects.equals(r.getArrival(),to)) && (java.util.Objects.equals(r.getDate(),date)) )
 			found=true;
 		}
 			
@@ -70,5 +69,5 @@ public class Driver extends User {
 			return r;
 		} else return null;
 	}
-*/
+
 }

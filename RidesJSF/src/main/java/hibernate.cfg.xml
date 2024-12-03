@@ -11,7 +11,7 @@
   <property name="hibernate.connection.pool_size">1</property>
   <property name="hibernate.connection.autocommit">false</property>
   <property name="hibernate.current_session_context_class">thread</property>
-  <property name="hibernate.hbm2ddl.auto">create</property>
+  <property name="hibernate.hbm2ddl.auto">update</property>
   
   <property name="hibernate.show_sql">true</property>
   <property name="hibernate.format_sql">true</property>
@@ -21,5 +21,6 @@
   <mapping class="eredua.domeinua.Driver"/>
   <mapping class="eredua.domeinua.Admin"/>
   <mapping class="eredua.domeinua.Traveler"/>
+  <mapping class="eredua.domeinua.Ride"/>
  </session-factory>
 </hibernate-configuration>

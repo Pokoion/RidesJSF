@@ -8,15 +8,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import businessLogicRides24.BLFacade;
 import eredua.domeinua.User;
 import exceptions.UserAlreadyExistsException;
-import nagusia.DataAccess;
 
 @ManagedBean(name = "Register")
 @SessionScoped
 public class Register {
 
-	private DataAccess dataAccess = new DataAccess();
+	private BLFacade facade = FacadeBean.getBusinessLogic();
 	private String email = "";
 	private String name = "";
 	private String pass = "";
@@ -113,7 +113,7 @@ public class Register {
     	if(!validateInput()) return;
     	try {
     		
-			dataAccess.register(email, name, pass, selectedType);
+    		facade.register(email, name, pass, selectedType);
 			
 		} catch (UserAlreadyExistsException | RuntimeException e) {
 			FacesContext.getCurrentInstance().addMessage(null, 

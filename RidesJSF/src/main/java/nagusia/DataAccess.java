@@ -9,7 +9,7 @@ import org.hibernate.Session;
 
 import configuration.UtilDate;
 import eredua.domeinua.Driver;
-import domain.Ride;
+import eredua.domeinua.Ride;
 import eredua.HibernateUtil;
 import eredua.domeinua.User;
 import eredua.domeinua.UserFactory;
@@ -28,9 +28,7 @@ public class DataAccess {
 	    session.beginTransaction();
 	    
 	    try {
-	        Query query = session.createQuery("FROM User u WHERE u.email = :email");
-	        query.setParameter("email", email);
-	        User existingUser = (User) query.uniqueResult();
+	        User existingUser = (User) session.get(User.class, email);
 	        
 	        if (existingUser != null) {
 	            throw new UserAlreadyExistsException("User with email " + email + " already exists.");
@@ -81,7 +79,7 @@ public class DataAccess {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    
-        Query query = session.createQuery("SELECT DISTINCT r.from FROM Ride r ORDER BY r.from");
+        Query query = session.createQuery("SELECT DISTINCT r.depart FROM Ride r ORDER BY r.arrival");
         List<String> cities = query.list();
         session.getTransaction().commit();
         return cities;
@@ -97,8 +95,8 @@ public class DataAccess {
 	public List<String> getArrivalCities(String from){
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
-	    Query query = session.createQuery("SELECT DISTINCT r.to FROM Ride r WHERE r.from = :from ORDER BY r.to");
-	    query.setParameter("from", from);
+	    Query query = session.createQuery("SELECT DISTINCT r.arrival FROM Ride r WHERE r.depart = :depart ORDER BY r.arrival");
+	    query.setParameter("depart", from);
 	    List<String> arrivingCities = query.list();
 
 	    session.getTransaction().commit();
@@ -127,9 +125,7 @@ public class DataAccess {
 	            throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
 	        }
 
-	        Query query = session.createQuery("FROM Driver d WHERE d.email = :email");
-	        query.setParameter("email", driverEmail);
-	        Driver driver = (Driver) query.uniqueResult();
+	        Driver driver = (Driver) session.get(Driver.class, driverEmail);
 
 	        if (driver == null) {
 	            throw new NullPointerException("Driver with email " + driverEmail + " not found.");
@@ -140,8 +136,9 @@ public class DataAccess {
 	            throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
 	        }
 
-	        Ride ride = driver.addRide(from, to, date, nPlaces, price);
-	        session.persist(driver); 
+	        Ride ride = driver.addRide(from, to, date, nPlaces, price);	        
+	        session.persist(driver);
+	        
 	        session.getTransaction().commit();
 	        return ride;
 	    } catch (Exception e) {
@@ -166,9 +163,9 @@ public class DataAccess {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 
-	    Query query = session.createQuery("SELECT r FROM Ride r WHERE r.from = :from AND r.to = :to AND r.date = :date");
-	    query.setParameter("from", from);
-	    query.setParameter("to", to);
+	    Query query = session.createQuery("SELECT r FROM Ride r WHERE r.depart = :depart AND r.arrival = :arrival AND r.date = :date");
+	    query.setParameter("depart", from);
+	    query.setParameter("arrival", to);
 	    query.setParameter("date", date);
 
 	    List<Ride> rides = query.list();
@@ -191,9 +188,9 @@ public class DataAccess {
 	    Date firstDayMonthDate = UtilDate.firstDayMonth(date);
 	    Date lastDayMonthDate = UtilDate.lastDayMonth(date);
 
-	    Query query = session.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.from = :from AND r.to = :to AND r.date BETWEEN :startDate AND :endDate");
-	    query.setParameter("from", from);
-	    query.setParameter("to", to);
+	    Query query = session.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.depart = :depart AND r.arrival = :arrival AND r.date BETWEEN :startDate AND :endDate");
+	    query.setParameter("depart", from);
+	    query.setParameter("arrival", to);
 	    query.setParameter("startDate", firstDayMonthDate);
 	    query.setParameter("endDate", lastDayMonthDate);
 

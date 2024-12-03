@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import businessLogic.BLFacade;
-import domain.Ride;
+import businessLogicRides24.BLFacade;
+import eredua.domeinua.Ride;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
