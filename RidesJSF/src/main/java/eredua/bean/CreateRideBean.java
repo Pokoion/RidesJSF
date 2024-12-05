@@ -1,13 +1,18 @@
 package eredua.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import businessLogicRides24.BLFacade;
+import eredua.LoggedUser;
+import eredua.domeinua.Car;
 import eredua.domeinua.Ride;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -23,6 +28,19 @@ public class CreateRideBean {
     private String arrivalCity = "";
     private Float price = (float) 0.0;
     private Integer seats = 0;
+    private Car selectedCar;
+    private List<Car> cars = new ArrayList<>();
+    
+    @ManagedProperty(value = "#{loggedUser}")
+    private LoggedUser loggedUser;
+	
+	public LoggedUser getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(LoggedUser loggedUser) {
+		this.loggedUser = loggedUser;
+	}
 
 	public CreateRideBean() {
 	}
@@ -67,6 +85,30 @@ public class CreateRideBean {
 		this.seats = seats;
 	}
 
+	public Car getSelectedCar() {
+		return selectedCar;
+	}
+
+	public void setSelectedCar(Car selectedCar) {
+		this.selectedCar = selectedCar;
+	}
+
+	public List<Car> getCars() {
+		return facade.getCarsByDriver(loggedUser.getUser().getEmail());
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
+	public void setSeats(Integer seats) {
+		this.seats = seats;
+	}
+
 	public boolean validateInput() {
 		String regex = "^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ]{3,}(?:[ '-][A-Za-zÁÉÍÓÚáéíóúÜüÑñ]+)*$"; // Valid city name regex, at least 3 letters
 		if (this.departCity == null || this.departCity.isEmpty() || !this.departCity.matches(regex)) {
@@ -94,6 +136,11 @@ public class CreateRideBean {
 				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Please select a valid date."));
 			return false;
 		}
+		if (this.selectedCar == null) {
+			FacesContext.getCurrentInstance().addMessage(null, 
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Please select a valid Car."));
+			return false;
+		}
 		return true;
 	}
 	
@@ -101,8 +148,9 @@ public class CreateRideBean {
 		
 		if (!validateInput()) return;
 		Ride ride = null;
+		String licensePlate = selectedCar.getLicensePlate();
 		try {
-			ride = facade.createRide(departCity, arrivalCity, data, seats, price, "jonoolea@gmail.com");
+			ride = facade.createRide(departCity, arrivalCity, data, seats, price, loggedUser.getUser().getEmail(), licensePlate);
 		} catch (RideMustBeLaterThanTodayException e) {
 			FacesContext.getCurrentInstance().addMessage(null, 
 				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Ride must be later than today."));

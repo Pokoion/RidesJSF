@@ -8,11 +8,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import configuration.UtilDate;
+import eredua.domeinua.Car;
 import eredua.domeinua.Driver;
 import eredua.domeinua.Ride;
 import eredua.HibernateUtil;
 import eredua.domeinua.User;
 import eredua.domeinua.UserFactory;
+import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;
@@ -116,8 +118,8 @@ public class DataAccess {
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
  	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
-	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverEmail) throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
-	    System.out.println(">> DataAccess: createRide=> from= " + from + " to= " + to + " driver=" + driverEmail + " date " + date);
+	public Ride createRide(String from, String to, Date date, int nPlaces, float price, String driverEmail, String licensePlate) throws RideAlreadyExistException, RideMustBeLaterThanTodayException {
+	    System.out.println(">> DataAccess: createRide=> from= " + from + " to= " + to + " driver=" + driverEmail + " date " + date + "car" + licensePlate);
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 	    try {
@@ -126,17 +128,27 @@ public class DataAccess {
 	        }
 
 	        Driver driver = (Driver) session.get(Driver.class, driverEmail);
+	        Car car = (Car) session.get(Car.class, licensePlate);
 
 	        if (driver == null) {
 	            throw new NullPointerException("Driver with email " + driverEmail + " not found.");
 	        }
 	        
-	        if (driver.doesRideExists(from, to, date)) {
-	            session.getTransaction().commit();
-	            throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+	        if (car == null) {
+	            throw new NullPointerException("Car with licensePlate " + licensePlate + " not found.");
 	        }
-
-	        Ride ride = driver.addRide(from, to, date, nPlaces, price);	        
+	        
+		    Query q = session.createQuery("from Ride where depart = :depart and arrival = :arrival and date = :date and driver.email = :driverEmail");
+		    q.setParameter("depart", from);
+		    q.setParameter("arrival", to);
+		    q.setParameter("date", date);
+		    q.setParameter("driverEmail", driverEmail);
+		    
+		    if(!q.list().isEmpty()) {
+	            throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+		    }
+	        
+	        Ride ride = driver.addRide(from, to, date, nPlaces, price, car);	        
 	        session.persist(driver);
 	        
 	        session.getTransaction().commit();
@@ -197,5 +209,38 @@ public class DataAccess {
 	    List<Date> dates = query.list();
 	    session.getTransaction().commit();
 	    return dates;
+	}
+	
+	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    try {
+        Driver driver = (Driver) session.get(Driver.class, email);
+        
+        if((Car) session.get(Car.class, licensePlate) != null) {
+        	throw new CarAlreadyExistsException("Car already exists!");
+        }
+        Car car = driver.addCar(licensePlate, seats, brand, model);
+        
+        session.persist(driver);
+        session.getTransaction().commit();
+        return car;
+	    } catch (Exception e) {
+	        if (session.getTransaction().isActive()) {
+	            session.getTransaction().rollback();
+	        }
+	        throw e;
+	    }
+	}
+	
+	public List<Car> getCarsByDriver(String email){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    Query query = session.createQuery("FROM Car r WHERE r.driver.email = :email");
+	    query.setParameter("email", email);
+
+	    List<Car> cars = query.list();
+        session.getTransaction().commit();
+        return cars;
 	}
 }

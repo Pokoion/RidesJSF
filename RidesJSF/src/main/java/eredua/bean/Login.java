@@ -2,10 +2,13 @@ package eredua.bean;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import businessLogicRides24.BLFacade;
+import eredua.LoggedUser;
 import eredua.domeinua.User;
 
 @ManagedBean(name = "Login")
@@ -16,7 +19,18 @@ public class Login {
 	private String email = "";
 	private String pass = "";
 	
+    @ManagedProperty(value = "#{loggedUser}")
+    private LoggedUser loggedUser;
+    
 	public Login() {
+	}
+	
+	public LoggedUser getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(LoggedUser loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	public String getEmail() {
@@ -56,6 +70,11 @@ public class Login {
 				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "User not found."));
 			return "";
     	}
-        return "Ok"; 
+    	loggedUser.setUser(u);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        session.setAttribute("loggedUser", loggedUser);
+        
+        return u.goMain(); 
     }
 }

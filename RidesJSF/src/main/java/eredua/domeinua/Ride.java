@@ -21,13 +21,15 @@ public class Ride {
 	private float price;
 	
 	@ManyToOne(targetEntity=Driver.class, fetch=FetchType.EAGER)
-	private Driver driver;  
+	private Driver driver;
+	
+	@ManyToOne(targetEntity=Car.class, fetch=FetchType.EAGER)
+	private Car car;
 	
 	public Ride(){
 	}
 	
-	public Ride(Integer rideNumber, String depart, String arrival, Date date, int nPlaces, float price, Driver driver) {
-		super();
+	public Ride(Integer rideNumber, String depart, String arrival, Date date, int nPlaces, float price, Driver driver, Car car) {
 		this.rideNumber = rideNumber;
 		this.depart = depart;
 		this.arrival = arrival;
@@ -35,11 +37,12 @@ public class Ride {
 		this.date=date;
 		this.price=price;
 		this.driver = driver;
+		this.car = car;
 	}
 
 	
 
-	public Ride(String depart, String arrival,  Date date, int nPlaces, float price, Driver driver) {
+	public Ride(String depart, String arrival,  Date date, int nPlaces, float price, Driver driver, Car car) {
 		super();
 		this.depart = depart;
 		this.arrival = arrival;
@@ -47,6 +50,7 @@ public class Ride {
 		this.date=date;
 		this.price=price;
 		this.driver = driver;
+		this.car = car;
 	}
 	
 	/**
@@ -172,6 +176,14 @@ public class Ride {
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+	
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
 	}
 
 	public String toString(){

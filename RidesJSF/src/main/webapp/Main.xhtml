@@ -9,59 +9,42 @@
 	<h:head>
 		<title>Rides24 / MainGUI</title>
 		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-				margin: 0;
-				background-color: #f4f4f4;
-			}
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
 
-			.form-container {
-				width: 500px;
-				background-color: #fff;
-				padding: 20px;
-				border-radius: 8px;
-				box-shadow: 0 0 10px rgba(0,0,0,0.1);
-				text-align: center;
-			}
+        .form-container {
+            width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column; /* Alinea los botones verticalmente */
+            align-items: center;
+        }
 
-			h1 {
-				font-size: 24px;
-				color: #333;
-				margin-bottom: 30px;
-			}
-
-			.p-button {
-				display: block;
-				margin: 15px auto;
-				width: 100%;
-				max-width: 200px;
-				font-size: 18px;
-				padding: 12px;
-				border-radius: 4px;
-				cursor: pointer;
-				box-shadow: none;
-    			text-shadow: none;
-    			color: black;
-			}
-
-			.p-button.create {
-				background-color: #D7D7D7;
-			}
-
-			.p-button.query {
-				background-color: #D7D7D7;
-			}
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+        }
 		</style>
 	</h:head>
 	<h:body>
 		<h:form class="form-container">
+		    <h:outputText value="Welcome Driver #{loggedUser.user.name}!" />
 			<h1>Select an Option</h1>
-			<p:commandButton value="Create Rides" action="CreateRides" styleClass="p-button create" />
-			<p:commandButton value="Query Rides" action="QueryRides" styleClass="p-button query" />
-			<p:commandButton value="Close Session" action="Close" styleClass="p-button query" />
+		    <p:commandButton value="Create Rides" action="CreateRides" style="width: 100%; margin-bottom: 15px;"/>
+		    <p:commandButton value="Query Rides" action="QueryRides" style="width: 100%; margin-bottom: 15px;"/>
+		    <p:commandButton value="Add Car" action="CreateCar" style="width: 100%; margin-bottom: 15px;"/>
+		    <p:commandButton value="Close Session" action="#{main.logout}" style="width: 100%; margin-bottom: 15px;"/>
 		</h:form>
 	</h:body>
 </f:view>

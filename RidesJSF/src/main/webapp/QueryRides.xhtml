@@ -16,7 +16,7 @@
 			<h1 style="text-align: center;">Query Rides</h1>
 
 			<!-- Go Home Button -->
-			<p:commandButton value="Go Home" action="Home" style="margin-bottom: 1em; margin-left:40px" />
+			<p:commandButton value="Go Home" action="#{queryRides.goHome}" style="margin-bottom: 1em; margin-left:40px" />
 			<br />
 			
 			<!-- Depart City -->
@@ -73,15 +73,17 @@
 					<p:column headerText="Arrival City">
 						<h:outputText value="#{ride.arrival}" />
 					</p:column>
-					<p:column headerText="Number of Places">
-						<h:outputText value="#{ride.nPlaces}" />
+					<p:column headerText="N. Places">
+						<h:outputText value="#{ride.nPlaces}">
+							<f:convertNumber pattern="#"/>
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Date">
 						<h:outputText value="#{ride.date}" >
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Price">
+					<p:column headerText="Price Per Seat">
 						<h:outputText value="#{ride.price}" />
 					</p:column>
 					<p:column headerText="Driver Name">
@@ -89,6 +91,9 @@
 					</p:column>
 					<p:column headerText="Driver Email">
 						<h:outputText value="#{ride.driver.email}" />
+					</p:column>
+					<p:column headerText="Car License Plate">
+						<h:outputText value="#{ride.car.licensePlate}" />
 					</p:column>
 				</p:dataTable>
 			</div>

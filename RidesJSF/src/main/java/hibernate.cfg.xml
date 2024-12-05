@@ -22,5 +22,7 @@
   <mapping class="eredua.domeinua.Admin"/>
   <mapping class="eredua.domeinua.Traveler"/>
   <mapping class="eredua.domeinua.Ride"/>
+  <mapping class="eredua.domeinua.Car"/>
+    
  </session-factory>
 </hibernate-configuration>

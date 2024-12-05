@@ -7,9 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import eredua.UserGoMain;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+public abstract class User implements UserGoMain {
 	
 	@Id
 	private String email;
@@ -78,5 +80,5 @@ public abstract class User {
 	public String toString() {
 		return "User [email=" + email + ", name=" + name + "]";
 	}
-	
+
 }

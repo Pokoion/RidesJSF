@@ -3,7 +3,7 @@ package eredua.domeinua;
 import javax.persistence.Entity;
 
 @Entity
-public class Traveler extends User {
+public class Traveler extends User{
 
     public Traveler() {
     }
@@ -12,4 +12,13 @@ public class Traveler extends User {
         super(email, name, pass);
     }
 
+    @Override
+    public String goMain() {
+    	return "Traveler";
+    }
+    
+    @Override
+    public String goHome() {
+    	return "HomeTraveler";
+    }
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides24 / MainGUI</title>
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				margin: 0;
+				background-color: #f4f4f4;
+			}
+
+			.form-container {
+				width: 500px;
+				background-color: #fff;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.1);
+				text-align: center;
+			}
+
+			h1 {
+				font-size: 24px;
+				color: #333;
+				margin-bottom: 30px;
+			}
+
+			.p-button {
+				display: block;
+				margin: 15px auto;
+				width: 100%;
+				max-width: 200px;
+				font-size: 18px;
+				padding: 12px;
+				border-radius: 4px;
+				cursor: pointer;
+				box-shadow: none;
+    			text-shadow: none;
+    			color: black;
+			}
+
+			.p-button.create {
+				background-color: #D7D7D7;
+			}
+
+			.p-button.query {
+				background-color: #D7D7D7;
+			}
+		</style>
+	</h:head>
+	<h:body>
+		<h:form class="form-container">
+		    <h:outputText value="Welcome Traveler #{loggedUser.user.name}!" />
+			<h1>Select an Option</h1>
+			<p:commandButton value="Query Rides" action="QueryRides" styleClass="p-button query" />
+			<p:commandButton value="Close Session" action="#{main.logout}" styleClass="p-button query" />
+		</h:form>
+	</h:body>
+</f:view>
+</html>

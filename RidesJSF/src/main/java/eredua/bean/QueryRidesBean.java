@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import businessLogicRides24.BLFacade;
+import eredua.LoggedUser;
 import eredua.domeinua.Ride;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -24,9 +26,20 @@ public class QueryRidesBean {
 	private List<String> departCities = new ArrayList<>();
 	private List<String> arrivalCities = new ArrayList<>();
 	private List<Ride> rides = new ArrayList<>();
+	
+    @ManagedProperty(value = "#{loggedUser}")
+    private LoggedUser loggedUser;
 
 	public QueryRidesBean() {
 
+	}
+	
+	public LoggedUser getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(LoggedUser loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	public List<Ride> getRides() {
@@ -83,9 +96,6 @@ public class QueryRidesBean {
 	}
 
 	public void updateRides() {
-		System.out.println(selectedDepartCity);
-		System.out.println(selectedArrivalCity);
-		System.out.println(data);
 
 		if (selectedDepartCity == null || selectedDepartCity.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error: Please select a Depart City."));
@@ -117,6 +127,11 @@ public class QueryRidesBean {
 		for (Date date : monthRides) {
 			this.rides.addAll(facade.getRides(selectedDepartCity, selectedArrivalCity, date));
 		}
+	}
+	
+	public String goHome() {
+		System.out.println(loggedUser.getUser().goMain());
+		return loggedUser.getUser().goHome();
 	}
 
 }

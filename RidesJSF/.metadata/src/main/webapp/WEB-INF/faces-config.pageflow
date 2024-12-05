@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17319257330730" configfile="/RidesJSF/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="660" y="264" id="pf17319261376261" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf173192894624918 pf17319615911954 pf17329696590000" inlinks="pf17319607109781 pf17319615911955 pf17329696590011" path="/Main.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="876" y="72" id="pf173192894624920" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf17319607109781" inlinks="pf173192894624918" path="/QueryRides.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="CreateRides.xhtml" x="886" y="334" id="pf173192894624921" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf17319615911955" inlinks="pf17319615911954" path="/CreateRides.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" x="405" y="252" id="pf17329696590012" outlinks="pf17329696590011 pf17329696590013" inlinks="pf17329696590000 pf17329696590014" path="/Login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="Register.xhtml" x="397" y="84" id="pf17329696590015" outlinks="pf17329696590014" inlinks="pf17329696590013" path="/Register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="624" y="206" id="pf17319261376261" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf173192894624918 pf17319615911954 pf17329696590000 pf173340753858610" inlinks="pf17319607109781 pf17319615911955 pf17329696590011 pf173340753858611" path="/Main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="900" y="384" id="pf173192894624920" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf17319607109781 pf17333927951336 pf17333927951337" inlinks="pf173192894624918 pf17333927951338 pf17333927951339" path="/QueryRides.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateRides.xhtml" x="864" y="36" id="pf173192894624921" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf17319615911955" inlinks="pf17319615911954" path="/CreateRides.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" x="212" y="276" id="pf17329696590012" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" outlinks="pf17329696590011 pf17329696590013 pf17333922803130 pf17333922803131" inlinks="pf17329696590000 pf17329696590014 pf17333922803132 pf17333922803133" path="/Login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Register.xhtml" x="204" y="108" id="pf17329696590015" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf17329696590014" inlinks="pf17329696590013" path="/Register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="MainAdmin.xhtml" x="580" y="360" id="pf17333922803134" outlinks="pf17333922803132 pf17333927951338" inlinks="pf17333922803130 pf17333927951336" path="/MainAdmin.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="MainTraveler.xhtml" x="598" y="540" id="pf17333922803135" outlinks="pf17333922803133 pf17333927951339" inlinks="pf17333922803131 pf17333927951337" path="/MainTraveler.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateCars.xhtml" x="996" y="189" id="pf173340753858612" outlinks="pf173340753858611" inlinks="pf173340753858610" path="/CreateCars.xhtml"/>
   <links id="pf173192894624918" target="pf173192894624920" source="pf17319261376261" outcome="QueryRides" redirect="true"/>
-  <links id="pf17319607109781" target="pf17319261376261" source="pf173192894624920" outcome="Home" redirect="true"/>
+  <links id="pf17319607109781" target="pf17319261376261" source="pf173192894624920" outcome="HomeDriver" redirect="true">
+    <bendPoints d1Width="-105" d1Height="-137" d2Width="192" d2Height="41"/>
+  </links>
   <links id="pf17319615911954" target="pf173192894624921" source="pf17319261376261" outcome="CreateRides" redirect="true"/>
   <links id="pf17319615911955" target="pf17319261376261" source="pf173192894624921" outcome="Home" redirect="true">
     <bendPoints d1Width="-96" d1Height="-77" d2Width="153" d2Height="-7"/>
   </links>
-  <links id="pf17329696590011" target="pf17319261376261" source="pf17329696590012" outcome="Ok" redirect="true">
+  <links id="pf17329696590011" target="pf17319261376261" source="pf17329696590012" outcome="Driver" redirect="true">
     <bendPoints d1Width="122" d1Height="40" d2Width="-131" d2Height="28"/>
   </links>
   <links id="pf17329696590000" target="pf17329696590012" source="pf17319261376261" outcome="Close" redirect="true"/>
@@ -19,4 +24,26 @@
     <bendPoints d1Width="-43" d1Height="-86" d2Width="-44" d2Height="82"/>
   </links>
   <links id="pf17329696590014" target="pf17329696590012" source="pf17329696590015" outcome="Login" redirect="true"/>
+  <links id="pf17333922803130" target="pf17333922803134" source="pf17329696590012" outcome="Admin" redirect="true">
+    <bendPoints d1Width="206" d1Height="74" d2Width="-202" d2Height="-48"/>
+  </links>
+  <links id="pf17333922803132" target="pf17329696590012" source="pf17333922803134" outcome="Close">
+    <bendPoints d1Width="-192" d1Height="-79" d2Width="216" d2Height="43"/>
+  </links>
+  <links id="pf17333922803131" target="pf17333922803135" source="pf17329696590012" outcome="Traveler" redirect="true">
+    <bendPoints d1Width="165" d1Height="157" d2Width="-245" d2Height="-107"/>
+  </links>
+  <links id="pf17333922803133" target="pf17329696590012" source="pf17333922803135" outcome="Close" redirect="true"/>
+  <links id="pf17333927951338" target="pf173192894624920" source="pf17333922803134" outcome="QueryRides"/>
+  <links id="pf17333927951339" target="pf173192894624920" source="pf17333922803135" outcome="QueryRides"/>
+  <links id="pf17333927951336" target="pf17333922803134" source="pf173192894624920" outcome="HomeAdmin">
+    <bendPoints d1Width="-202" d1Height="-57" d2Width="117" d2Height="-33"/>
+  </links>
+  <links id="pf17333927951337" target="pf17333922803135" source="pf173192894624920" outcome="HomeTraveler" redirect="true">
+    <bendPoints d1Width="-150" d1Height="31" d2Width="99" d2Height="-111"/>
+  </links>
+  <links id="pf173340753858610" target="pf173340753858612" source="pf17319261376261" outcome="CreateCar" redirect="true"/>
+  <links id="pf173340753858611" target="pf17319261376261" source="pf173340753858612" outcome="Home" redirect="true">
+    <bendPoints d1Width="-158" d1Height="-35" d2Width="233" d2Height="-52"/>
+  </links>
 </pageflow:Pageflow>

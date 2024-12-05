@@ -16,13 +16,34 @@ public class Driver extends User {
 	@OneToMany(targetEntity=Ride.class, mappedBy="driver", fetch=FetchType.EAGER, cascade= {CascadeType.REMOVE,CascadeType.PERSIST})
 	private List<Ride> rides;
 	
+	@OneToMany(targetEntity=Car.class, mappedBy="driver", fetch=FetchType.LAZY, cascade= {CascadeType.REMOVE,CascadeType.PERSIST})
+	private List<Car> cars;
+	
     public Driver() {
     }
     
     public Driver(String email, String name, String pass) {
         super(email, name, pass);
         this.rides = new ArrayList<>();
+        this.cars = new ArrayList<>();
     }
+
+    
+	public List<Ride> getRides() {
+		return rides;
+	}
+
+	public void setRides(List<Ride> rides) {
+		this.rides = rides;
+	}
+
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}
 
 	/**
 	 * This method creates a bet with a question, minimum bet ammount and percentual profit
@@ -32,10 +53,16 @@ public class Driver extends User {
 	 * @return Bet
 	 */
     
-	public Ride addRide(String from, String to, Date date, int nPlaces, float price)  {
-        Ride ride=new Ride(from,to,date,nPlaces,price, this);
+	public Ride addRide(String from, String to, Date date, int nPlaces, float price, Car car)  {
+        Ride ride=new Ride(from,to,date,nPlaces,price, this, car);
         rides.add(ride);
         return ride;
+	}
+	
+	public Car addCar(String licensePlate, int seats, String brand, String model)  {
+        Car car=new Car(licensePlate, seats, brand, model, this);
+        cars.add(car);
+        return car;
 	}
 
 	/**
@@ -69,5 +96,15 @@ public class Driver extends User {
 			return r;
 		} else return null;
 	}
+	
+    @Override
+    public String goMain() {
+    	return "Driver";
+    }
+    
+    @Override
+    public String goHome() {
+    	return "HomeDriver";
+    }
 
 }

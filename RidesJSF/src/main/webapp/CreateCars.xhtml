@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides 24 / CreateCars</title>
+	</h:head>
+	<style>
+.error-message {
+	color: red;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.info-message {
+	color: blue;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
+}
+</style>
+	<h:body>
+		<!-- Title -->
+		<h1 style="text-align: center;">Create Cars</h1>
+
+		<!-- Home Button -->
+		<h:form>
+			<p:commandButton value="Go Home" action="Home"
+				style="align-self: flex-start; margin-left: 40px;" />
+		</h:form>
+
+		<!-- Form -->
+		<h:form style="display: flex; flex-direction: column; align-items: center; margin-top: 40px">
+
+			<div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+
+
+			</div>
+
+			<p:outputLabel for="licensePlate" value="License Plate: " />
+			<p:inputText id="licensePlate" value="#{createCars.licensePlate}" placeholder="1234ABC"/>
+			
+			<p:outputLabel for="seats" value="Car Seats Number: " />
+			<p:inputText id="seats" value="#{createCars.seats}"
+									converter="javax.faces.Integer" />
+			
+			<p:outputLabel for="brand" value="Brand: " />
+			<p:inputText id="brand" value="#{createCars.brand}" />
+			
+			<p:outputLabel for="model" value="Model: " />
+			<p:inputText id="model" value="#{createCars.model}" />
+			
+			<!-- Create Ride Button -->
+			<p:commandButton id="createCarButton" value="Create Car"
+				action="#{createCars.createCar}" update="messages"
+				style="margin: 20px;" />
+
+			<!-- Messages -->
+			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
+
+		</h:form>
+	</h:body>
+</f:view>
+</html>

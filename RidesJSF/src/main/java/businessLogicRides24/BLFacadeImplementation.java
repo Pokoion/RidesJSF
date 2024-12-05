@@ -3,10 +3,12 @@ import java.util.Date;
 import java.util.List;
 
 import nagusia.DataAccess;
+import eredua.domeinua.Car;
 import eredua.domeinua.Ride;
 import eredua.domeinua.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;
+import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
 
 /**
@@ -46,8 +48,8 @@ public class BLFacadeImplementation implements BLFacade {
 	 * {@inheritDoc}
 	 */
 
-   public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail ) throws RideMustBeLaterThanTodayException, RideAlreadyExistException{
-		Ride ride=dbManager.createRide(from, to, date, nPlaces, price, driverEmail);		
+   public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail, String licensePlate) throws RideMustBeLaterThanTodayException, RideAlreadyExistException{
+		Ride ride=dbManager.createRide(from, to, date, nPlaces, price, driverEmail, licensePlate);		
 		return ride;
    };
 	
@@ -86,6 +88,14 @@ public class BLFacadeImplementation implements BLFacade {
 	
 	public User login(String email, String pass) {
 		return dbManager.login(email, pass);
+	}
+	
+	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException {
+		return dbManager.createCar(email, licensePlate, seats, brand, model);
+	}
+	
+	public List<Car> getCarsByDriver(String email){
+		return dbManager.getCarsByDriver(email);
 	}
 
 }

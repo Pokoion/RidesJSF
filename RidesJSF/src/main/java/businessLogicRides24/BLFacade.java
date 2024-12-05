@@ -3,11 +3,13 @@ package businessLogicRides24;
 import java.util.Date;
 import java.util.List;
 
+import eredua.domeinua.Car;
 //import domain.Booking;
 import eredua.domeinua.Ride;
 import eredua.domeinua.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;
+import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
  
 /**
@@ -43,7 +45,7 @@ public interface BLFacade  {
 	 * @throws RideMustBeLaterThanTodayException if the ride date is before today 
  	 * @throws RideAlreadyExistException if the same ride already exists for the driver
 	 */
-   public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail) throws RideMustBeLaterThanTodayException, RideAlreadyExistException;
+   public Ride createRide( String from, String to, Date date, int nPlaces, float price, String driverEmail, String licensePlate) throws RideMustBeLaterThanTodayException, RideAlreadyExistException;
 	
 	
 	/**
@@ -68,4 +70,8 @@ public interface BLFacade  {
 	public User register(String email, String name, String pass, String type) throws UserAlreadyExistsException, RuntimeException;
 
 	public User login(String email, String pass);
+	
+	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException;
+	
+	public List<Car> getCarsByDriver(String email);
 }

@@ -13,4 +13,13 @@ public class Admin extends User {
         super(email, name, pass);
     }
 
+    @Override
+    public String goMain() {
+    	return "Admin";
+    }
+    
+    @Override
+    public String goHome() {
+    	return "HomeAdmin";
+    }
 }
