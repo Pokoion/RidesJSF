@@ -7,99 +7,116 @@
 	xmlns:p="http://primefaces.org/ui">
 <f:view>
 	<h:head>
-		<title>Rides 24 / CreateRides</title>
+		<title>Rides 24 / Create Rides</title>
+		<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.form-container {
+    width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-container p\\:outputLabel {
+    font-size: 14px;
+}
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.form-container .submit-btn {
+    background-color: #7CE7F3;
+}
+
+.form-container .home-btn {
+    background-color: #D7D7D7;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.info-message {
+    color: blue;
+    text-align: center;
+    list-style-type: none;
+    padding-left: 0;
+}
+		</style>
 	</h:head>
-	<style>
-			body {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 100vh;
-				margin: 0;
-				font-family: Arial, sans-serif;
-			}
-			h1 {
-				text-align: center;
-			}
-
-			form {
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start; /* Align form elements to the left */
-				width: 300px; /* Fixed width for form */
-				gap: 15px;
-			}
-
-			input, button {
-				width: 100%;
-				padding: 10px;
-				box-sizing: border-box;
-			}
-			
-			.go-home-button {
-				position: absolute;
-				top: 20px;
-				left: 20px;
-			}
-			
-			/* Messages styling */
-			.error-message, .info-message {
-				text-align: center;
-				padding-left: 0;
-				list-style-type: none;
-			}
-			.error-message {
-				color: red;
-			}
-			.info-message {
-				color: blue;
-			}
-</style>
 	<h:body>
-		<!-- Home Button -->
-		<h:form>
-			<p:commandButton value="Go Home" action="Home" styleClass="go-home-button" style="width: 10%;"/>
-		</h:form>	
+		<!-- Formulario principal -->
+		<h:form class="form-container">
+			<h1>Create Rides</h1>
 
-		<!-- Title -->
-		<h1 style="text-align: center;">Create Rides</h1>
-		
-		<!-- Form -->
-		<h:form>
-			<p:outputLabel for="departCity" value="Depart City: " />
+			<!-- Campos del formulario -->
+			<p:outputLabel for="departCity" value="Depart City" />
 			<p:inputText id="departCity" value="#{createRides.departCity}" />
 
-			<p:outputLabel for="arrivalCity" value="Arrival City: " />
+			<p:outputLabel for="arrivalCity" value="Arrival City" />
 			<p:inputText id="arrivalCity" value="#{createRides.arrivalCity}" />
 
-			<p:outputLabel for="price" value="Price: " />
-			<p:inputText id="price" value="#{createRides.price}"
-				converter="javax.faces.Float" />
+			<p:outputLabel for="price" value="Price" />
+			<p:inputText id="price" value="#{createRides.price}" converter="javax.faces.Float" />
 
-			<p:outputLabel for="seats" value="Seats: " />
-			<p:inputText id="seats" value="#{createRides.seats}"
-				converter="javax.faces.Integer" />
+			<p:outputLabel for="seats" value="Seats" />
+			<p:inputText id="seats" value="#{createRides.seats}" converter="javax.faces.Integer" />
 
-			<p:outputLabel for="calendar" value="Date: " />
-			<p:calendar value="#{createRides.data}" id="calendar" inline="true"
-				pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
+			<p:outputLabel for="calendar" value="Date" />
+			<p:calendar value="#{createRides.data}" id="calendar" inline="true" pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
 
-			<p:outputLabel for="cars" value="Car: " />
-			<p:selectOneMenu id="cars" value="#{createRides.selectedCar}"
-				converter="omnifaces.SelectItemsConverter">
+			<p:outputLabel for="cars" value="Car" />
+			<br />
+			<p:selectOneMenu id="cars" value="#{createRides.selectedCar}" converter="omnifaces.SelectItemsConverter">
 				<f:selectItem itemLabel="Choose a Car" itemValue="" />
 				<f:selectItems value="#{createRides.cars}" />
 			</p:selectOneMenu>
 
+			<!-- Botón para crear el Ride -->
+			<p:commandButton id="createRideButton" value="Create Ride" action="#{createRides.createRide}" update="messages" styleClass="submit-btn" />
+			
+			<!-- Botón para ir al Home -->
+			<p:commandButton value="Go Home" action="Home" styleClass="home-btn" />
 
-			<!-- Create Ride Button -->
-			<p:commandButton id="createRideButton" value="Create Ride"
-				action="#{createRides.createRide}" update="messages"/>
-
-			<!-- Messages -->
-			<h:messages id="messages" showDetail="true"
-				errorClass="error-message" infoClass="info-message" />
+			<!-- Mensajes -->
+			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
 		</h:form>
 	</h:body>
 </f:view>

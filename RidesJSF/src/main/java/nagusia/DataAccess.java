@@ -1,18 +1,24 @@
 package nagusia;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 
 import configuration.UtilDate;
+import eredua.domeinua.Admin;
+import eredua.domeinua.Alarm;
 import eredua.domeinua.Car;
 import eredua.domeinua.Driver;
 import eredua.domeinua.Ride;
+import eredua.domeinua.Traveler;
 import eredua.HibernateUtil;
 import eredua.domeinua.User;
+import eredua.domeinua.User.TYPES;
 import eredua.domeinua.UserFactory;
 import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
@@ -22,9 +28,39 @@ import exceptions.UserAlreadyExistsException;
 public class DataAccess {
 
 	public DataAccess() {
-		
+        Configuration configuration = new Configuration().configure();
+        String ddlOption = configuration.getProperty("hibernate.hbm2ddl.auto");
+
+        if ("create".equalsIgnoreCase(ddlOption)) {
+            System.out.println("Hibernate config set to 'create'. Initializing database...");
+            initializeDatabase();
+        } else {
+            System.out.println("No database initialization needed. Hibernate config: " + ddlOption);
+        }
 	}
 	
+	private void initializeDatabase() {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    
+        Calendar calendar = Calendar.getInstance();      
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date datePlusOneDay = calendar.getTime();
+	    
+		Traveler traveler = (Traveler) UserFactory.createUser(TYPES.TRAVELER, "t@gmail.com", "Ibai Llanos", "a");
+		Admin admin = (Admin) UserFactory.createUser(TYPES.ADMIN, "a@gmail.com", "Pedro Sanchez", "a");
+		Driver driver = (Driver) UserFactory.createUser(TYPES.DRIVER, "d@gmail.com", "Albert Einstein", "a");
+		Car car = driver.addCar("1234AAA", 4, "Opel", "Astra");
+		Ride ride = driver.addRide("Ordizia", "Beasain", datePlusOneDay, 3, (float) 1.5, car);
+		Alarm alarm = traveler.addAlarm("Beasain", "Lazkao", datePlusOneDay);
+		
+		session.persist(traveler);
+		session.persist(admin);
+		session.persist(driver);
+		
+        session.getTransaction().commit();  
+	}
+
 	public User register(String email, String name, String pass, String type) throws UserAlreadyExistsException, RuntimeException{
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
@@ -124,18 +160,22 @@ public class DataAccess {
 	    session.beginTransaction();
 	    try {
 	        if (new Date().compareTo(date) > 0) {
-	            throw new RideMustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("CreateRideGUI.ErrorRideMustBeLaterThanToday"));
+	            throw new RideMustBeLaterThanTodayException("Ride must be later than today.");
 	        }
 
 	        Driver driver = (Driver) session.get(Driver.class, driverEmail);
 	        Car car = (Car) session.get(Car.class, licensePlate);
-
+	        
 	        if (driver == null) {
 	            throw new NullPointerException("Driver with email " + driverEmail + " not found.");
 	        }
 	        
 	        if (car == null) {
 	            throw new NullPointerException("Car with licensePlate " + licensePlate + " not found.");
+	        }	        
+
+	        if (car.getSeats() <= nPlaces) {
+	        	throw new IllegalArgumentException("Car with license Plate " + car.getLicensePlate() + " does not have enough seats.");
 	        }
 	        
 		    Query q = session.createQuery("from Ride where depart = :depart and arrival = :arrival and date = :date and driver.email = :driverEmail");
@@ -145,7 +185,7 @@ public class DataAccess {
 		    q.setParameter("driverEmail", driverEmail);
 		    
 		    if(!q.list().isEmpty()) {
-	            throw new RideAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.RideAlreadyExist"));
+	            throw new RideAlreadyExistException("Ride already exists.");
 		    }
 	        
 	        Ride ride = driver.addRide(from, to, date, nPlaces, price, car);	        

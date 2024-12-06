@@ -63,7 +63,6 @@ public class Register {
 		List<String> types = new ArrayList<>();
 		types.add(User.TYPES.TRAVELER);
 		types.add(User.TYPES.DRIVER);
-		types.add(User.TYPES.ADMIN);
 		return types;
 	}
 

@@ -151,15 +151,9 @@ public class CreateRideBean {
 		String licensePlate = selectedCar.getLicensePlate();
 		try {
 			ride = facade.createRide(departCity, arrivalCity, data, seats, price, loggedUser.getUser().getEmail(), licensePlate);
-		} catch (RideMustBeLaterThanTodayException e) {
+		} catch (NullPointerException | IllegalArgumentException | RideAlreadyExistException | RideMustBeLaterThanTodayException e) {
 			FacesContext.getCurrentInstance().addMessage(null, 
-				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Ride must be later than today."));
-			e.printStackTrace();
-			return;
-		} catch (RideAlreadyExistException e) {
-			FacesContext.getCurrentInstance().addMessage(null, 
-				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Ride already exists."));
-			e.printStackTrace();
+				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", e.getMessage()));
 			return;
 		}
 		

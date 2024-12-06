@@ -97,6 +97,7 @@
 		<navigation-case>
 			<from-outcome>Close</from-outcome>
 			<to-view-id>/Login.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
