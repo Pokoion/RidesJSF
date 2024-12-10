@@ -169,5 +169,23 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>MainTraveler.xhtml</display-name>
+		<from-view-id>/MainTraveler.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>CreateAlarm</from-outcome>
+			<to-view-id>/CreateAlarms.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>CreateAlarms.xhtml</display-name>
+		<from-view-id>/CreateAlarms.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>Home</from-outcome>
+			<to-view-id>/MainTraveler.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

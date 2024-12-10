@@ -3,11 +3,13 @@ import java.util.Date;
 import java.util.List;
 
 import nagusia.DataAccess;
+import eredua.domeinua.Alarm;
 import eredua.domeinua.Car;
 import eredua.domeinua.Ride;
 import eredua.domeinua.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;
+import exceptions.AlarmAlreadyExistsException;
 import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
 
@@ -97,6 +99,17 @@ public class BLFacadeImplementation implements BLFacade {
 	public List<Car> getCarsByDriver(String email){
 		return dbManager.getCarsByDriver(email);
 	}
+	
+	public Alarm createAlarm(String email,String depart, String arrival, Date date) throws AlarmAlreadyExistsException {
+		return dbManager.createAlarm(email, depart, arrival, date);
+	}
 
+	public List<Alarm> getRideMatchingAlarms(String email){
+		return dbManager.getRideMatchingAlarms(email);
+	}
+	
+	public boolean disableAlarm(String email, int id) {
+		return dbManager.disableAlarm(email, id);
+	}
 }
 

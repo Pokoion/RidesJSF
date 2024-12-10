@@ -3,12 +3,14 @@ package businessLogicRides24;
 import java.util.Date;
 import java.util.List;
 
+import eredua.domeinua.Alarm;
 import eredua.domeinua.Car;
 //import domain.Booking;
 import eredua.domeinua.Ride;
 import eredua.domeinua.User;
 import exceptions.RideMustBeLaterThanTodayException;
 import exceptions.UserAlreadyExistsException;
+import exceptions.AlarmAlreadyExistsException;
 import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
  
@@ -74,4 +76,10 @@ public interface BLFacade  {
 	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException;
 	
 	public List<Car> getCarsByDriver(String email);
+	
+	public Alarm createAlarm(String email,String depart, String arrival, Date date) throws AlarmAlreadyExistsException;
+	
+	public List<Alarm> getRideMatchingAlarms(String email);
+	
+	public boolean disableAlarm(String email, int id);
 }

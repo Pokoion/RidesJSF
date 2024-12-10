@@ -1,5 +1,6 @@
 package nagusia;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ import eredua.HibernateUtil;
 import eredua.domeinua.User;
 import eredua.domeinua.User.TYPES;
 import eredua.domeinua.UserFactory;
+import exceptions.AlarmAlreadyExistsException;
 import exceptions.CarAlreadyExistsException;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -34,6 +36,7 @@ public class DataAccess {
         if ("create".equalsIgnoreCase(ddlOption)) {
             System.out.println("Hibernate config set to 'create'. Initializing database...");
             initializeDatabase();
+            System.out.println("--------------------------DataBase initialized--------------------------");
         } else {
             System.out.println("No database initialization needed. Hibernate config: " + ddlOption);
         }
@@ -52,7 +55,7 @@ public class DataAccess {
 		Driver driver = (Driver) UserFactory.createUser(TYPES.DRIVER, "d@gmail.com", "Albert Einstein", "a");
 		Car car = driver.addCar("1234AAA", 4, "Opel", "Astra");
 		Ride ride = driver.addRide("Ordizia", "Beasain", datePlusOneDay, 3, (float) 1.5, car);
-		Alarm alarm = traveler.addAlarm("Beasain", "Lazkao", datePlusOneDay);
+		Alarm alarm = traveler.addAlarm("Ordizia", "Beasain", datePlusOneDay);
 		
 		session.persist(traveler);
 		session.persist(admin);
@@ -282,5 +285,77 @@ public class DataAccess {
 	    List<Car> cars = query.list();
         session.getTransaction().commit();
         return cars;
+	}
+	
+	public Alarm createAlarm(String email,String depart, String arrival, Date date) throws AlarmAlreadyExistsException {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    
+	    try {
+        Traveler traveler = (Traveler) session.get(Traveler.class, email);
+	    Query query = session.createQuery("FROM Alarm a WHERE a.depart = :depart and a.arrival = :arrival and a.date = :date and a.traveler.email = :email and a.active = true");
+	    query.setParameter("depart", depart);
+	    query.setParameter("arrival", arrival);
+	    query.setParameter("date", date);
+	    query.setParameter("email", email);
+	    List<Alarm> alarmList = query.list();
+	    if(!alarmList.isEmpty()) {
+	    	throw new AlarmAlreadyExistsException("Alarm already exists");
+	    }
+		Alarm alarm = traveler.addAlarm(depart, arrival, date);
+        session.persist(traveler);
+        session.getTransaction().commit();
+        return alarm;
+	    } catch (Exception e) {
+	        if (session.getTransaction().isActive()) {
+	            session.getTransaction().rollback();
+	        }
+	        throw e;
+	    }
+	}
+	
+	public List<Alarm> getRideMatchingAlarms(String email){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+        Traveler traveler = (Traveler) session.get(Traveler.class, email);
+        
+        List<Alarm> alarmList = traveler.getActiveAlarms();
+        List<Alarm> matchingAlarms = new ArrayList<>();
+        Date currentDate = new Date();
+        
+        for (Alarm alarm : alarmList) {
+            Query query = session.createQuery("FROM Ride r WHERE r.depart = :depart AND r.arrival = :arrival AND r.date = :date AND r.date > :currentDate");
+            query.setParameter("depart", alarm.getDepart());
+            query.setParameter("arrival", alarm.getArrival());
+            query.setParameter("date", alarm.getDate());
+            query.setParameter("currentDate", currentDate);
+
+            Ride ride = (Ride) query.setMaxResults(1).uniqueResult();
+
+            if (ride != null) {
+                matchingAlarms.add(alarm);
+            }
+        }
+        
+        session.getTransaction().commit();
+        return matchingAlarms;
+	}
+	
+	public boolean disableAlarm(String email, int id) {
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    try {
+        Traveler traveler = (Traveler) session.get(Traveler.class, email);
+        traveler.disableAlarm(id);
+        session.persist(traveler);
+        System.out.println("Alarm disabled");
+        session.getTransaction().commit();
+        return true;
+	    } catch (Exception e) {
+	        if (session.getTransaction().isActive()) {
+	            session.getTransaction().rollback();
+	        }
+	        return false;
+	    }
 	}
 }

@@ -17,8 +17,24 @@ public class Traveler extends User{
 	
     public Traveler() {
     }
-	
-    public Traveler(String email, String name, String pass) {
+    
+    public List<Alarm> getAlarms() {
+		return alarms;
+	}
+    
+    public List<Alarm> getActiveAlarms() {
+		List<Alarm> activeAlarms = new ArrayList<>();
+		for(Alarm alarma: this.alarms) {
+			if(alarma.isActive()) activeAlarms.add(alarma);
+		}
+		return activeAlarms;
+	}
+
+	public void setAlarms(List<Alarm> alarms) {
+		this.alarms = alarms;
+	}
+
+	public Traveler(String email, String name, String pass) {
         super(email, name, pass);
         this.alarms = new ArrayList<>();
     }
@@ -27,6 +43,15 @@ public class Traveler extends User{
         Alarm alarm = new Alarm(from, to, date, this);
         alarms.add(alarm);
         return alarm;
+	}
+	
+	public void disableAlarm(int id) {
+	    for (Alarm alarm : alarms) {
+	        if (alarm.getId() == id) {
+	            alarm.setActive(false);
+	            break;
+	        }
+	    }
 	}
 
     @Override
