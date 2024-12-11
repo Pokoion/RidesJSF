@@ -37,15 +37,27 @@
         }
 		</style>
 	</h:head>
-	<h:body>
-		<h:form class="form-container">
-		    <h:outputText value="Welcome Driver #{loggedUser.user.name}!" />
-			<h1>Select an Option</h1>
-		    <p:commandButton value="Create Rides" action="CreateRides" style="width: 100%; margin-bottom: 15px;"/>
-		    <p:commandButton value="Query Rides" action="QueryRides" style="width: 100%; margin-bottom: 15px;"/>
-		    <p:commandButton value="Add Car" action="CreateCar" style="width: 100%; margin-bottom: 15px;"/>
-		    <p:commandButton value="Close Session" action="#{main.logout}" style="width: 100%; margin-bottom: 15px;"/>
-		</h:form>
-	</h:body>
+<h:body>
+    <!-- Form container to hold the options for the driver -->
+    <h:form class="form-container">
+        <!-- Display a welcome message with the logged-in user's name -->
+        <h:outputText value="Welcome Driver #{loggedUser.user.name}!" />
+        
+        <!-- Main heading for the page -->
+        <h1>Select an Option</h1>
+        
+        <!-- Button to create rides; triggers the CreateRides action -->
+        <p:commandButton value="Create Rides" action="CreateRides" style="width: 100%; margin-bottom: 15px;"/>
+        
+        <!-- Button to query rides; triggers the QueryRides action -->
+        <p:commandButton value="Query Rides" action="QueryRides" style="width: 100%; margin-bottom: 15px;"/>
+        
+        <!-- Button to add a car; triggers the CreateCar action -->
+        <p:commandButton value="Add Car" action="CreateCar" style="width: 100%; margin-bottom: 15px;"/>
+        
+        <!-- Button to close the session; triggers the logout action from the main controller -->
+        <p:commandButton value="Close Session" action="#{main.logout}" style="width: 100%; margin-bottom: 15px;"/>
+    </h:form>
+</h:body>
 </f:view>
 </html>

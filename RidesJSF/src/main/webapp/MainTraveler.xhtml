@@ -70,53 +70,73 @@ h1 {
 }
 </style>
 	</h:head>
-	<h:body>
-		<h:form id="mainForm" class="form-container">
-			<h:outputText value="Welcome Traveler #{loggedUser.user.name}!" />
-			<h1>Select an Option</h1>
-			<p:commandButton value="Query Rides" action="QueryRides"
-				styleClass="p-button query" />
-			<p:commandButton value="Create Alarm" action="CreateAlarm"
-				styleClass="p-button query" />
-			<p:commandButton value="Close Session" action="#{main.logout}"
-				styleClass="p-button query" />
-			<p:commandButton id="alarmButton" value="Alarms #{main.alarms.size()}"
-			    style="color: red; background-color: transparent; border: 1px solid red;"
-			    onclick="toggleTableVisibility();" type="button">		    
-			</p:commandButton>
+<h:body>
+    <!-- Main form container -->
+    <h:form id="mainForm" class="form-container">
+        <!-- Display a welcome message with the logged-in traveler's name -->
+        <h:outputText value="Welcome Traveler #{loggedUser.user.name}!" />
+        
+        <!-- Main heading for the page -->
+        <h1>Select an Option</h1>
+        
+        <!-- Button to query rides; triggers the QueryRides action -->
+        <p:commandButton value="Query Rides" action="QueryRides" styleClass="p-button query" />
+        
+        <!-- Button to create an alarm; triggers the CreateAlarm action -->
+        <p:commandButton value="Create Alarm" action="CreateAlarm" styleClass="p-button query" />
+        
+        <!-- Button to close the session; triggers the logout action from the main controller -->
+        <p:commandButton value="Close Session" action="#{main.logout}" styleClass="p-button query" />
+        
+        <!-- Button to show or hide the alarms table, displays the count of alarms dynamically -->
+        <p:commandButton id="alarmButton" value="Found Alarms #{main.alarms.size()}"
+            style="color: red; background-color: transparent; border: 1px solid red;"
+            onclick="toggleTableVisibility();" type="button">		    
+        </p:commandButton>
 
-			<p:dataTable id="alarms" value="#{main.alarms}" var="alarm"
-				responsiveLayout="scroll" style="width: 50%; margin-top: 30px; margin-left: 60px; display: none;">
-				<p:column headerText="Depart">
-					<h:outputText value="#{alarm.depart}" />
-				</p:column>
-				<p:column headerText="Arrival">
-					<h:outputText value="#{alarm.arrival}" />
-				</p:column>
-				<p:column headerText="Date">
-					<h:outputText value="#{alarm.date}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Deactive Alarm">
-					<p:commandButton value="Deactive" update="alarms, :mainForm:alarmButton, :mainForm:messages" action="#{main.deactiveAlarm(alarm)}"/>
-				</p:column>
-			</p:dataTable>
-			
-			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
-		</h:form>
-		<script>
-		function toggleTableVisibility() {
-			var table = document.getElementById('mainForm:alarms');
-			var messages = document.getElementById('mainForm:messages');
-			messages.innerText = '';
-			if (table.style.display === 'none') {
-				table.style.display = 'block'; // Muestra la tabla
-			} else {
-				table.style.display = 'none'; // Oculta la tabla
-			}
-		}
-</script>
-	</h:body>
+        <!-- Table to display alarms; hidden by default and toggled with the button -->
+        <p:dataTable id="alarms" value="#{main.alarms}" var="alarm"
+            responsiveLayout="scroll" style="width: 50%; margin-top: 30px; margin-left: 60px; display: none;">
+            <!-- Column for the departure details of the alarm -->
+            <p:column headerText="Depart">
+                <h:outputText value="#{alarm.depart}" />
+            </p:column>
+            
+            <!-- Column for the arrival details of the alarm -->
+            <p:column headerText="Arrival">
+                <h:outputText value="#{alarm.arrival}" />
+            </p:column>
+            
+            <!-- Column for the date of the alarm, with a date format -->
+            <p:column headerText="Date">
+                <h:outputText value="#{alarm.date}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+                </h:outputText>
+            </p:column>
+            
+            <!-- Column with a button to deactivate the alarm, updating necessary components -->
+            <p:column headerText="Deactive Alarm">
+                <p:commandButton value="Disable" update="alarms, :mainForm:alarmButton, :mainForm:messages" action="#{main.deactiveAlarm(alarm)}"/>
+            </p:column>
+        </p:dataTable>
+
+        <!-- Component to display any messages (errors or information) -->
+        <h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
+    </h:form>
+
+    <!-- JavaScript function to toggle the visibility of the alarms table -->
+    <script>
+    function toggleTableVisibility() {
+        var table = document.getElementById('mainForm:alarms'); // Get the alarms table
+        var messages = document.getElementById('mainForm:messages'); // Get the messages component
+        messages.innerText = ''; // Clear any previous messages
+        if (table.style.display === 'none') {
+            table.style.display = 'block'; // Show the table if it's hidden
+        } else {
+            table.style.display = 'none'; // Hide the table if it's visible
+        }
+    }
+    </script>
+</h:body>
 </f:view>
 </html>

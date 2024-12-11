@@ -10,96 +10,106 @@
 		<title>Rides 24 / CreateAlarms</title>
 		<style>
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	margin: 0;
+	background-color: #f4f4f4;
 }
 
 .form-container {
-    width: 500px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	width: 500px;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
+	text-align: center;
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 20px;
 }
 
 .form-container p\\:outputLabel {
-    font-size: 14px;
+	font-size: 14px;
 }
 
-.form-container input,
-.form-container select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.form-container input, .form-container select {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
 }
 
 .form-container button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    color: black;
-    cursor: pointer;
-    margin-bottom: 10px;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	color: black;
+	cursor: pointer;
+	margin-bottom: 10px;
 }
 
 .form-container .submit-btn {
-    background-color: #7CE7F3;
+	background-color: #7CE7F3;
 }
 
 .form-container .home-btn {
-    background-color: #D7D7D7;
+	background-color: #D7D7D7;
 }
 
 .error-message {
-    color: red;
-    text-align: center;
-    list-style-type: none;
-    padding-left: 0;
+	color: red;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
 }
 
 .info-message {
-    color: blue;
-    text-align: center;
-    list-style-type: none;
-    padding-left: 0;
+	color: blue;
+	text-align: center;
+	list-style-type: none;
+	padding-left: 0;
 }
-		</style>
+</style>
 	</h:head>
 	<h:body>
-		<!-- Formulario principal -->
+		<!-- Form container to create alarms -->
 		<h:form class="form-container">
+			<!-- Header for the page -->
 			<h1>Create Alarms</h1>
 
+			<!-- Input for departure city -->
 			<p:outputLabel for="depart" value="Depart City" />
 			<p:inputText id="depart" value="#{createAlarms.depart}" />
 
+			<!-- Input for arrival city -->
 			<p:outputLabel for="arrival" value="Arrival City" />
 			<p:inputText id="arrival" value="#{createAlarms.arrival}" />
 
+			<!-- Calendar component to select a date -->
 			<p:outputLabel for="calendar" value="Date" />
-			<p:calendar value="#{createAlarms.date}" id="calendar" inline="true" pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
+			<p:calendar value="#{createAlarms.date}" id="calendar" inline="true"
+				pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
 
-			<p:commandButton id="createAlarmButton" value="Create Alarm" action="#{createAlarms.createAlarm}" update="messages" styleClass="submit-btn" />
+			<!-- Button to create a new alarm -->
+			<p:commandButton id="createAlarmButton" value="Create Alarm"
+				action="#{createAlarms.createAlarm}" update="messages"
+				styleClass="submit-btn" />
 
+			<!-- Button to navigate back to the home page -->
 			<p:commandButton value="Go Home" action="Home" styleClass="home-btn" />
 
-			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
+			<!-- Messages to display error or info after actions -->
+			<h:messages id="messages" showDetail="true"
+				errorClass="error-message" infoClass="info-message" />
 		</h:form>
 	</h:body>
 </f:view>

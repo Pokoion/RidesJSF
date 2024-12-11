@@ -69,17 +69,75 @@ public interface BLFacade  {
 	 */
 	public List<Date> getThisMonthDatesWithRides(String from, String to, Date date);
 	
+	/**
+	 * Registers a new user in the system.
+	 * 
+	 * @param email the email address of the user
+	 * @param name the full name of the user
+	 * @param pass the password for the user
+	 * @param type the type of user (e.g., Traveler, Driver, Admin)
+	 * @return the newly created user
+	 * @throws UserAlreadyExistsException if a user with the same email already exists
+	 * @throws RuntimeException if there is an error during the registration process
+	 */
 	public User register(String email, String name, String pass, String type) throws UserAlreadyExistsException, RuntimeException;
 
+	/**
+	 * Authenticates a user by verifying their email and password.
+	 * 
+	 * @param email the email address of the user
+	 * @param pass the password of the user
+	 * @return the authenticated user, or null if authentication fails
+	 */
 	public User login(String email, String pass);
 	
+	/**
+	 * Creates a new car for a driver.
+	 * 
+	 * @param email the email of the driver
+	 * @param licensePlate the license plate of the car
+	 * @param seats the number of seats in the car
+	 * @param brand the brand of the car
+	 * @param model the model of the car
+	 * @return the created car
+	 * @throws CarAlreadyExistsException if a car with the same license plate already exists
+	 */
 	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException;
 	
+	/**
+	 * Retrieves all cars associated with a specific driver.
+	 * 
+	 * @param email the email of the driver
+	 * @return a list of cars owned by the driver
+	 */
 	public List<Car> getCarsByDriver(String email);
 	
+	/**
+	 * Creates a new alarm for a traveler.
+	 * 
+	 * @param email the email of the traveler
+	 * @param depart the departure location for the alarm
+	 * @param arrival the arrival location for the alarm
+	 * @param date the date of the ride for which the alarm is created
+	 * @return the created alarm
+	 * @throws AlarmAlreadyExistsException if an alarm with the same details already exists
+	 */
 	public Alarm createAlarm(String email,String depart, String arrival, Date date) throws AlarmAlreadyExistsException;
 	
+	/**
+	 * Retrieves all active alarms that match the criteria for the rides.
+	 * 
+	 * @param email the email of the traveler
+	 * @return a list of alarms matching available rides
+	 */
 	public List<Alarm> getRideMatchingAlarms(String email);
 	
+	/**
+	 * Disables an alarm for a traveler.
+	 * 
+	 * @param email the email of the traveler
+	 * @param id the ID of the alarm to disable
+	 * @return true if the alarm was successfully disabled, false otherwise
+	 */
 	public boolean disableAlarm(String email, int id);
 }

@@ -92,34 +92,45 @@ h1 {
 	padding-left: 0;
 }
 </style>
-	<h:body>
-		<h:form class="form-container">
-			<h1>Register</h1>
+<h:body>
+    <h:form class="form-container">
+        <!-- Title of the registration page -->
+        <h1>Register</h1>
 
-			<p:outputLabel for="email" value="Email" />
-			<p:inputText id="email" value="#{Register.email}" />
+        <!-- Email input field -->
+        <p:outputLabel for="email" value="Email" />
+        <p:inputText id="email" value="#{Register.email}" />
 
-			<p:outputLabel for="name" value="Name" />
-			<p:inputText id="name" value="#{Register.name}" />
+        <!-- Name input field -->
+        <p:outputLabel for="name" value="Name" />
+        <p:inputText id="name" value="#{Register.name}" />
 
-			<p:outputLabel for="pass" value="Password" />
-			<h:inputSecret id="pass" value="#{Register.pass}" />
+        <!-- Password input field -->
+        <p:outputLabel for="pass" value="Password" />
+        <h:inputSecret id="pass" value="#{Register.pass}" />
 
-			<p:outputLabel for="pass2" value="Repeat Password" />
-			<h:inputSecret id="pass2" value="#{Register.pass2}" />
+        <!-- Repeat Password input field -->
+        <p:outputLabel for="pass2" value="Repeat Password" />
+        <h:inputSecret id="pass2" value="#{Register.pass2}" />
 
-			<p:outputLabel for="types" value="User Type" />
-			<p:selectOneMenu id="types" value="#{Register.selectedType}">
-				<f:selectItems value="#{Register.types}" />
-			</p:selectOneMenu>
+        <!-- User Type dropdown selection -->
+        <p:outputLabel for="types" value="User Type" />
+        <p:selectOneMenu id="types" value="#{Register.selectedType}">
+            <f:selectItems value="#{Register.types}" />
+        </p:selectOneMenu>
 
-			<p:commandButton value="Register" action="#{Register.register}"
-				styleClass="register-btn" update="messages" />
-			<p:commandButton value="Back to Login" action="Login"
-				styleClass="login-btn" />
-			<h:messages id="messages" showDetail="true"
-				errorClass="error-message" infoClass="info-message" />
-		</h:form>
-	</h:body>
+        <!-- Register Button -->
+        <p:commandButton value="Register" action="#{Register.register}"
+            styleClass="register-btn" update="messages" />
+
+        <!-- Back to Login Button -->
+        <p:commandButton value="Back to Login" action="Login"
+            styleClass="login-btn" />
+
+        <!-- Message display for validation or errors -->
+        <h:messages id="messages" showDetail="true"
+            errorClass="error-message" infoClass="info-message" />
+    </h:form>
+</h:body>
 </f:view>
 </html>

@@ -50,7 +50,7 @@ public class MainBean {
 	public void deactiveAlarm(Alarm alarm) {
 		if(facade.disableAlarm(loggedUser.getUser().getEmail(), alarm.getId())) {
 			FacesContext.getCurrentInstance().addMessage(null, 
-				    new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "Alarm deleted correctly!"));
+				    new FacesMessage(FacesMessage.SEVERITY_INFO, "Info: ", "Alarm disabled correctly!"));
 		}else {
 			FacesContext.getCurrentInstance().addMessage(null, 
 				    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: ", "Alarm could not be deleted."));

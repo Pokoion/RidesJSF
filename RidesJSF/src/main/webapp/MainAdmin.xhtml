@@ -56,13 +56,21 @@
 			}
 		</style>
 	</h:head>
-	<h:body>
-		<h:form class="form-container">
-		    <h:outputText value="Welcome Admin #{loggedUser.user.name}!" />
-			<h1>Select an Option</h1>
-			<p:commandButton value="Query Rides" action="QueryRides" styleClass="p-button query" />
-			<p:commandButton value="Close Session" action="#{main.logout}" styleClass="p-button query" />
-		</h:form>
-	</h:body>
+<h:body>
+    <!-- Form container to hold the options for the admin -->
+    <h:form class="form-container">
+        <!-- Display a welcome message with the logged-in admin's name -->
+        <h:outputText value="Welcome Admin #{loggedUser.user.name}!" />
+        
+        <!-- Main heading for the page -->
+        <h1>Select an Option</h1>
+        
+        <!-- Button to query rides; triggers the QueryRides action -->
+        <p:commandButton value="Query Rides" action="QueryRides" styleClass="p-button query" />
+        
+        <!-- Button to close the session; triggers the logout action from the main controller -->
+        <p:commandButton value="Close Session" action="#{main.logout}" styleClass="p-button query" />
+    </h:form>
+</h:body>
 </f:view>
 </html>

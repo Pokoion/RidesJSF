@@ -82,42 +82,49 @@ h1 {
 		</style>
 	</h:head>
 	<h:body>
-		<!-- Formulario principal -->
-		<h:form class="form-container">
-			<h1>Create Rides</h1>
+	<!-- Main form for creating rides -->
+	<h:form class="form-container">
+		<!-- Title of the page -->
+		<h1>Create Rides</h1>
 
-			<!-- Campos del formulario -->
-			<p:outputLabel for="departCity" value="Depart City" />
-			<p:inputText id="departCity" value="#{createRides.departCity}" />
+		<!-- Form fields -->
+		<!-- Input for the departure city -->
+		<p:outputLabel for="departCity" value="Depart City" />
+		<p:inputText id="departCity" value="#{createRides.departCity}" />
 
-			<p:outputLabel for="arrivalCity" value="Arrival City" />
-			<p:inputText id="arrivalCity" value="#{createRides.arrivalCity}" />
+		<!-- Input for the arrival city -->
+		<p:outputLabel for="arrivalCity" value="Arrival City" />
+		<p:inputText id="arrivalCity" value="#{createRides.arrivalCity}" />
 
-			<p:outputLabel for="price" value="Price" />
-			<p:inputText id="price" value="#{createRides.price}" converter="javax.faces.Float" />
+		<!-- Input for the price of the ride -->
+		<p:outputLabel for="price" value="Price" />
+		<p:inputText id="price" value="#{createRides.price}" converter="javax.faces.Float" />
 
-			<p:outputLabel for="seats" value="Seats" />
-			<p:inputText id="seats" value="#{createRides.seats}" converter="javax.faces.Integer" />
+		<!-- Input for the number of available seats -->
+		<p:outputLabel for="seats" value="Seats" />
+		<p:inputText id="seats" value="#{createRides.seats}" converter="javax.faces.Integer" />
 
-			<p:outputLabel for="calendar" value="Date" />
-			<p:calendar value="#{createRides.data}" id="calendar" inline="true" pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
+		<!-- Input for the date of the ride -->
+		<p:outputLabel for="calendar" value="Date" />
+		<p:calendar value="#{createRides.data}" id="calendar" inline="true" pattern="dd/MM/yyyy" readonlyInput="true" ajax="true" />
 
-			<p:outputLabel for="cars" value="Car" />
-			<br />
-			<p:selectOneMenu id="cars" value="#{createRides.selectedCar}" converter="omnifaces.SelectItemsConverter">
-				<f:selectItem itemLabel="Choose a Car" itemValue="" />
-				<f:selectItems value="#{createRides.cars}" />
-			</p:selectOneMenu>
+		<!-- Dropdown for selecting a car -->
+		<p:outputLabel for="cars" value="Car" />
+		<br />
+		<p:selectOneMenu id="cars" value="#{createRides.selectedCar}" converter="omnifaces.SelectItemsConverter">
+			<f:selectItem itemLabel="Choose a Car" itemValue="" />
+			<f:selectItems value="#{createRides.cars}" />
+		</p:selectOneMenu>
 
-			<!-- Botón para crear el Ride -->
-			<p:commandButton id="createRideButton" value="Create Ride" action="#{createRides.createRide}" update="messages" styleClass="submit-btn" />
-			
-			<!-- Botón para ir al Home -->
-			<p:commandButton value="Go Home" action="Home" styleClass="home-btn" />
+		<!-- Button to create the ride -->
+		<p:commandButton id="createRideButton" value="Create Ride" action="#{createRides.createRide}" update="messages" styleClass="submit-btn" />
+		
+		<!-- Button to navigate back to the home page -->
+		<p:commandButton value="Go Home" action="Home" styleClass="home-btn" />
 
-			<!-- Mensajes -->
-			<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
-		</h:form>
-	</h:body>
+		<!-- Section to display error and informational messages -->
+		<h:messages id="messages" showDetail="true" errorClass="error-message" infoClass="info-message" />
+	</h:form>
+</h:body>
 </f:view>
 </html>

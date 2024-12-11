@@ -92,21 +92,41 @@ public class BLFacadeImplementation implements BLFacade {
 		return dbManager.login(email, pass);
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
+	
 	public Car createCar(String email, String licensePlate, int seats, String brand, String model) throws CarAlreadyExistsException {
 		return dbManager.createCar(email, licensePlate, seats, brand, model);
 	}
+	
+    /**
+     * {@inheritDoc}
+     */
 	
 	public List<Car> getCarsByDriver(String email){
 		return dbManager.getCarsByDriver(email);
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
+	
 	public Alarm createAlarm(String email,String depart, String arrival, Date date) throws AlarmAlreadyExistsException {
 		return dbManager.createAlarm(email, depart, arrival, date);
 	}
+	
+    /**
+     * {@inheritDoc}
+     */
 
 	public List<Alarm> getRideMatchingAlarms(String email){
 		return dbManager.getRideMatchingAlarms(email);
 	}
+	
+    /**
+     * {@inheritDoc}
+     */
 	
 	public boolean disableAlarm(String email, int id) {
 		return dbManager.disableAlarm(email, id);

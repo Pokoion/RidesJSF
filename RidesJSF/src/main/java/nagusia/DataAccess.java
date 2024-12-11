@@ -10,7 +10,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
-import configuration.UtilDate;
+import eredua.UtilDate;
 import eredua.domeinua.Admin;
 import eredua.domeinua.Alarm;
 import eredua.domeinua.Car;
@@ -43,26 +43,57 @@ public class DataAccess {
 	}
 	
 	private void initializeDatabase() {
+	    // Obtain the current Hibernate session
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
-	    
-        Calendar calendar = Calendar.getInstance();      
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        Date datePlusOneDay = calendar.getTime();
-	    
-		Traveler traveler = (Traveler) UserFactory.createUser(TYPES.TRAVELER, "t@gmail.com", "Ibai Llanos", "a");
-		Admin admin = (Admin) UserFactory.createUser(TYPES.ADMIN, "a@gmail.com", "Pedro Sanchez", "a");
-		Driver driver = (Driver) UserFactory.createUser(TYPES.DRIVER, "d@gmail.com", "Albert Einstein", "a");
-		Car car = driver.addCar("1234AAA", 4, "Opel", "Astra");
-		Ride ride = driver.addRide("Ordizia", "Beasain", datePlusOneDay, 3, (float) 1.5, car);
-		Alarm alarm = traveler.addAlarm("Ordizia", "Beasain", datePlusOneDay);
-		
-		session.persist(traveler);
-		session.persist(admin);
-		session.persist(driver);
-		
-        session.getTransaction().commit();  
+
+	    // Prepare a date two days from now
+	    Calendar calendar = Calendar.getInstance();      
+	    calendar.add(Calendar.DAY_OF_YEAR, 2);
+	    Date datePlusTwoDays = calendar.getTime();
+
+	    // Prepare a date three days from now
+	    calendar = Calendar.getInstance();
+	    calendar.add(Calendar.DAY_OF_YEAR, 3);
+	    Date datePlusThreeDays = calendar.getTime();
+
+	    // Create two travelers with unique details
+	    Traveler traveler1 = (Traveler) UserFactory.createUser(TYPES.TRAVELER, "messi@gmail.com", "Lionel Messi", "a");
+	    Traveler traveler2 = (Traveler) UserFactory.createUser(TYPES.TRAVELER, "cr7@gmail.com", "Cristiano Ronaldo", "a");
+
+	    // Create two admins with unique details
+	    Admin admin1 = (Admin) UserFactory.createUser(TYPES.ADMIN, "admin1@gmail.com", "Ada Lovelace", "a");
+	    Admin admin2 = (Admin) UserFactory.createUser(TYPES.ADMIN, "admin2@gmail.com", "Alan Turing", "a");
+
+	    // Create two drivers with unique details
+	    Driver driver1 = (Driver) UserFactory.createUser(TYPES.DRIVER, "driver1@gmail.com", "Marie Curie", "a");
+	    Driver driver2 = (Driver) UserFactory.createUser(TYPES.DRIVER, "driver2@gmail.com", "Nikola Tesla", "a");
+
+	    // Each driver adds a car with specific attributes
+	    Car car1 = driver1.addCar("5678BBB", 5, "Toyota", "Corolla");
+	    Car car2 = driver2.addCar("9101CCC", 4, "Ford", "Focus");
+
+	    // Each driver creates a ride associated with their car and specific details
+	    Ride ride1 = driver1.addRide("Donostia", "Bilbao", datePlusTwoDays, 4, (float) 2.0, car1);
+	    Ride ride2 = driver2.addRide("Madrid", "Valencia", datePlusThreeDays, 3, (float) 3.5, car2);
+
+	    // Each traveler sets an alarm for their preferred ride
+	    Alarm alarm1 = traveler1.addAlarm("Donostia", "Bilbao", datePlusTwoDays);
+	    Alarm alarm2 = traveler2.addAlarm("Madrid", "Valencia", datePlusThreeDays);
+	    Alarm alarm3 = traveler2.addAlarm("Madrid", "Donostia", datePlusThreeDays);
+
+	    // Persist all created entities to the database
+	    session.persist(traveler1);
+	    session.persist(traveler2);
+	    session.persist(admin1);
+	    session.persist(admin2);
+	    session.persist(driver1);
+	    session.persist(driver2);
+
+	    // Commit the transaction to finalize changes
+	    session.getTransaction().commit();
 	}
+
 
 	public User register(String email, String name, String pass, String type) throws UserAlreadyExistsException, RuntimeException{
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -229,7 +260,7 @@ public class DataAccess {
 	}
 	
 	/**
-	 * This method retrieves from the database the dates a month for which there are events
+	 * This method retrieves from the database the dates a month after today for which there are events
 	 * @param from the origin location of a ride
 	 * @param to the destination location of a ride 
 	 * @param date of the month for which days with rides want to be retrieved 
@@ -240,13 +271,13 @@ public class DataAccess {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    session.beginTransaction();
 
-	    Date firstDayMonthDate = UtilDate.firstDayMonth(date);
+	    Date todayDate = new Date();
 	    Date lastDayMonthDate = UtilDate.lastDayMonth(date);
 
 	    Query query = session.createQuery("SELECT DISTINCT r.date FROM Ride r WHERE r.depart = :depart AND r.arrival = :arrival AND r.date BETWEEN :startDate AND :endDate");
 	    query.setParameter("depart", from);
 	    query.setParameter("arrival", to);
-	    query.setParameter("startDate", firstDayMonthDate);
+	    query.setParameter("startDate", todayDate);
 	    query.setParameter("endDate", lastDayMonthDate);
 
 	    List<Date> dates = query.list();
