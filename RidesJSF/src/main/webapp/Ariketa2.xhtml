@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Rides 24</title>
+	</h:head>
+	<h:body>
+		<p:dataTable id="monthRides" value="#{ariketa.rides}" var="ride"
+			responsiveLayout="scroll" style="width: 100%;">
+
+			<p:column headerText="DEPART CITY">
+				<h:outputText value="#{ride.depart}" />
+			</p:column>
+
+			<p:column headerText="DRIVER EMAIL">
+				<h:outputText value="#{ride.driver.email}" />
+			</p:column>
+
+			<p:column headerText="RIDE DATE">
+				<h:outputText value="#{ride.date}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Madrid" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="PRICE">
+				<h:outputText value="#{ride.price}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:body>
+</f:view>
+</html>

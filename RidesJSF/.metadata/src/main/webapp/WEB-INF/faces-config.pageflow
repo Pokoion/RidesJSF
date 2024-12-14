@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17319257330730" configfile="/RidesJSF/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="624" y="206" id="pf17319261376261" referenceLink="//@navigationRule.17/@navigationCase.0/@toViewId|" outlinks="pf173192894624918 pf17319615911954 pf17329696590000 pf173340753858610" inlinks="pf17319607109781 pf17319615911955 pf17329696590011 pf173340753858611" path="/Main.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Main.xhtml" x="624" y="206" id="pf17319261376261" referenceLink="//@navigationRule.17/@navigationCase.0/@toViewId|" outlinks="pf173192894624918 pf17319615911954 pf17329696590000 pf173340753858610 pf17339967419010" inlinks="pf17319607109781 pf17319615911955 pf17329696590011 pf173340753858611 pf17339984678544" path="/Main.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="QueryRides.xhtml" x="900" y="384" id="pf173192894624920" referenceLink="//@navigationRule.15/@fromViewId|" outlinks="pf17319607109781 pf17333927951336 pf17333927951337" inlinks="pf173192894624918 pf17333927951338 pf17333927951339" path="/QueryRides.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="CreateRides.xhtml" x="864" y="36" id="pf173192894624921" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf17319615911955" inlinks="pf17319615911954" path="/CreateRides.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="Login.xhtml" x="212" y="276" id="pf17329696590012" referenceLink="//@navigationRule.11/@navigationCase.0/@toViewId|" outlinks="pf17329696590011 pf17329696590013 pf17333922803130 pf17333922803131" inlinks="pf17329696590000 pf17329696590014 pf17333922803132 pf17333922803133" path="/Login.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="Register.xhtml" x="204" y="108" id="pf17329696590015" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf17329696590014" inlinks="pf17329696590013" path="/Register.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="MainAdmin.xhtml" x="580" y="360" id="pf17333922803134" referenceLink="//@navigationRule.14/@navigationCase.0/@toViewId|" outlinks="pf17333922803132 pf17333927951338" inlinks="pf17333922803130 pf17333927951336" path="/MainAdmin.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="MainTraveler.xhtml" x="598" y="540" id="pf17333922803135" referenceLink="//@navigationRule.15/@navigationCase.0/@toViewId|" outlinks="pf17333922803133 pf17333927951339 pf17337381899700" inlinks="pf17333922803131 pf17333927951337 pf17337381899701" path="/MainTraveler.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="MainTraveler.xhtml" x="598" y="540" id="pf17333922803135" referenceLink="//@navigationRule.19/@navigationCase.0/@toViewId|" outlinks="pf17333922803133 pf17333927951339 pf17337381899700" inlinks="pf17333922803131 pf17333927951337 pf17337381899701" path="/MainTraveler.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="CreateCars.xhtml" x="996" y="189" id="pf173340753858612" referenceLink="//@navigationRule.17/@fromViewId|" outlinks="pf173340753858611" inlinks="pf173340753858610" path="/CreateCars.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="CreateAlarms.xhtml" x="906" y="629" id="pf17337381899702" outlinks="pf17337381899701" inlinks="pf17337381899700" path="/CreateAlarms.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="CreateAlarms.xhtml" x="906" y="629" id="pf17337381899702" referenceLink="//@navigationRule.19/@fromViewId|" outlinks="pf17337381899701" inlinks="pf17337381899700" path="/CreateAlarms.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Ariketa1.xhtml" x="360" y="132" id="pf17339967419031" outlinks="pf17339970990102 pf17339984678544" inlinks="pf17339967419010 pf17339984678555" path="/Ariketa1.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Ariketa2.xhtml" x="540" y="12" id="pf17339970990103" outlinks="pf17339984678555" inlinks="pf17339970990102" path="/Ariketa2.xhtml"/>
   <links id="pf173192894624918" target="pf173192894624920" source="pf17319261376261" outcome="QueryRides" redirect="true"/>
   <links id="pf17319607109781" target="pf17319261376261" source="pf173192894624920" outcome="HomeDriver" redirect="true">
     <bendPoints d1Width="-105" d1Height="-137" d2Width="192" d2Height="41"/>
@@ -50,5 +52,13 @@
   <links id="pf17337381899700" target="pf17337381899702" source="pf17333922803135" outcome="CreateAlarm" redirect="true"/>
   <links id="pf17337381899701" target="pf17333922803135" source="pf17337381899702" outcome="Home" redirect="true">
     <bendPoints d1Width="-124" d1Height="-92" d2Width="186" d2Height="-3"/>
+  </links>
+  <links id="pf17339967419010" target="pf17339967419031" source="pf17319261376261" outcome="AriketaBat" redirect="true"/>
+  <links id="pf17339970990102" target="pf17339970990103" source="pf17339967419031" outcome="AriketaBi" redirect="true"/>
+  <links id="pf17339984678544" target="pf17319261376261" source="pf17339967419031" outcome="Home" redirect="true">
+    <bendPoints d1Width="206" d1Height="-6" d2Width="-47" d2Height="-80"/>
+  </links>
+  <links id="pf17339984678555" target="pf17339967419031" source="pf17339970990103" outcome="AriketaBat" redirect="true">
+    <bendPoints d1Width="-152" d1Height="19" d2Width="28" d2Height="-101"/>
   </links>
 </pageflow:Pageflow>

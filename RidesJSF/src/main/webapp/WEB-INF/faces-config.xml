@@ -187,5 +187,41 @@
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<display-name>Main.xhtml</display-name>
+		<from-view-id>/Main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>AriketaBat</from-outcome>
+			<to-view-id>/Ariketa1.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Ariketa1.xhtml</display-name>
+		<from-view-id>/Ariketa1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>AriketaBi</from-outcome>
+			<to-view-id>/Ariketa2.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Ariketa1.xhtml</display-name>
+		<from-view-id>/Ariketa1.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>Home</from-outcome>
+			<to-view-id>/Main.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>Ariketa2.xhtml</display-name>
+		<from-view-id>/Ariketa2.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>AriketaBat</from-outcome>
+			<to-view-id>/Ariketa1.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

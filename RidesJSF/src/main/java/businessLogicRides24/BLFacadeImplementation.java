@@ -131,5 +131,9 @@ public class BLFacadeImplementation implements BLFacade {
 	public boolean disableAlarm(String email, int id) {
 		return dbManager.disableAlarm(email, id);
 	}
+	
+	public List<Ride> getRidesAriketa(String depart){
+		return dbManager.getRidesAriketa(depart);
+	}
 }
 

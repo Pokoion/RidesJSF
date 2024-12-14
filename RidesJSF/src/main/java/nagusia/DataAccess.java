@@ -76,6 +76,7 @@ public class DataAccess {
 	    // Each driver creates a ride associated with their car and specific details
 	    Ride ride1 = driver1.addRide("Donostia", "Bilbao", datePlusTwoDays, 4, (float) 2.0, car1);
 	    Ride ride2 = driver2.addRide("Madrid", "Valencia", datePlusThreeDays, 3, (float) 3.5, car2);
+	    Ride ride3 = driver2.addRide("Donostia", "Bilbao", datePlusTwoDays, 2, (float) 2.0, car2);
 
 	    // Each traveler sets an alarm for their preferred ride
 	    Alarm alarm1 = traveler1.addAlarm("Donostia", "Bilbao", datePlusTwoDays);
@@ -388,5 +389,17 @@ public class DataAccess {
 	        }
 	        return false;
 	    }
+	}
+	
+	public List<Ride> getRidesAriketa(String depart){
+	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	    session.beginTransaction();
+	    
+	    Query query = session.createQuery("FROM Ride r WHERE r.depart = :depart");
+	    query.setParameter("depart", depart);
+	    List<Ride> rides = query.list();
+        session.getTransaction().commit();
+        
+        return rides;
 	}
 }

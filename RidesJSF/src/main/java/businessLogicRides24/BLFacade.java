@@ -140,4 +140,6 @@ public interface BLFacade  {
 	 * @return true if the alarm was successfully disabled, false otherwise
 	 */
 	public boolean disableAlarm(String email, int id);
+	
+	public List<Ride> getRidesAriketa(String depart);
 }
